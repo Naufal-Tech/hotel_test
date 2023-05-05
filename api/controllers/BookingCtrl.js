@@ -12,6 +12,7 @@ const BookingController = {
       latitude,
       longitude,
       phone,
+      booking_date,
     } = req.body;
 
     // Start a session
@@ -34,6 +35,7 @@ const BookingController = {
         latitude,
         longitude,
         phone,
+        booking_date,
       });
 
       // create reusable transporter object using the configuration
@@ -80,6 +82,7 @@ const BookingController = {
       <p>Here are the details of the new booking:</p>
       <ul>
         <li>Booking ID: ${booking.bookingId}</li>
+        <li>Booking Date: ${booking.booking_date}</li>
         <li>Fullname: ${fullname}</li>
         <li>Customer Email: ${email}</li>
         <li>Customer Phone Number: ${phone}</li>

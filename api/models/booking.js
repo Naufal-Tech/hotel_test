@@ -37,6 +37,10 @@ const BookingSchema = new mongoose.Schema({
     type: String,
   },
 
+  booking_date: {
+    type: Date,
+  },
+
   slug_layanan: {
     type: String,
   },
