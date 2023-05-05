@@ -102,6 +102,62 @@ const NewsletterController = {
       }
     }
   },
+
+  get: async function (req, res) {
+    try {
+      const newsletter = await models.NewsletterDB.find({
+        deleted_time: { $exists: false },
+        deleted_by: { $exists: false },
+      });
+      return response.ok(newsletter, res, "Success");
+    } catch (err) {
+      return response.error(400, err.message, res, err);
+    }
+  },
+
+  delete: async function (req, res) {
+    const { newsletter_id } = req.body;
+    const deletedTime = moment().tz("Asia/Jakarta").format();
+
+    const filter = {
+      _id: newsletter_id,
+      deleted_time: {
+        $exists: false,
+      },
+      deleted_by: {
+        $exists: false,
+      },
+    };
+
+    const newsletter = await models.NewsletterDB.findOne(filter);
+
+    if (!newsletter) {
+      return response.error(400, "Newsletter not found", res);
+    }
+
+    const session = await models.NewsletterDB.startSession();
+    session.startTransaction();
+
+    try {
+      const options = { session };
+
+      // Update the `VendorDB` document with the new data
+      await models.NewsletterDB.findByIdAndUpdate(
+        newsletter_id,
+        { deleted_time: deletedTime, deleted_by: req.user._id },
+        options
+      );
+
+      await session.commitTransaction();
+      session.endSession();
+
+      return response.ok(true, res, `Success`);
+    } catch (err) {
+      await session.abortTransaction();
+      session.endSession();
+      return response.error(400, err.message, res, err);
+    }
+  },
 };
 
 module.exports = NewsletterController;

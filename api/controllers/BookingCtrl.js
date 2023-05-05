@@ -163,6 +163,7 @@ const BookingController = {
       <p>Here are the details of the updated booking:</p>
       <ul>
         <li>Booking ID: ${booking.bookingId}</li>
+        <li>Status Booking: ${booking.is_active}</li>
         <li>Customer Name: ${booking.fullname}</li>
         <li>Service: ${booking.layanan}</li>
         <li>Special requests: ${booking.permintaan_special || "None"}</li>
@@ -253,6 +254,73 @@ const BookingController = {
       return response.ok(booking, res, "Success");
     } catch (err) {
       return response.error(400, err.message, res, err);
+    }
+  },
+
+  searchIdBooking: async function (req, res) {
+    try {
+      const id = req.query.id;
+      const booking = await models.BookingDB.findOne({
+        bookingId: id,
+      });
+      if (!booking) return response.error(404, `Booking ID Not Found`, res);
+      return response.ok(booking, res, `Success`);
+    } catch (error) {
+      return response.error(400, error.message, res, error);
+    }
+  },
+
+  searchEmail: async function (req, res) {
+    try {
+      const email = req.query.email;
+      const booking = await models.BookingDB.findOne({
+        email: email,
+      });
+      if (!booking) return response.error(404, `Booking Email Not Found`, res);
+      return response.ok(booking, res, `Success`);
+    } catch (error) {
+      return response.error(400, error.message, res, error);
+    }
+  },
+
+  searchPhone: async function (req, res) {
+    try {
+      const phone = req.query.phone;
+      const booking = await models.BookingDB.findOne({
+        phone: phone,
+      });
+      if (!booking) return response.error(404, `Booking Phone Not Found`, res);
+      return response.ok(booking, res, `Success`);
+    } catch (error) {
+      return response.error(400, error.message, res, error);
+    }
+  },
+
+  searchService: async function (req, res) {
+    try {
+      const service = req.query.service;
+      const booking = await models.BookingDB.findOne({
+        slug_layanan: service,
+      });
+      if (!booking)
+        return response.error(404, `Booking Service Not Found`, res);
+      return response.ok(booking, res, `Success`);
+    } catch (error) {
+      return response.error(400, error.message, res, error);
+    }
+  },
+
+  searchFullname: async function (req, res) {
+    try {
+      const fullname = req.query.fullname;
+      const booking = await models.BookingDB.findOne({
+        slug_fullname: fullname,
+      });
+      if (!booking)
+        return response.error(404, `Booking Fullname Not Found`, res);
+      return response.ok(booking, res, `Success`);
+    } catch (error) {
+      return response.error(400, error.message, res, error);
     }
   },
 };

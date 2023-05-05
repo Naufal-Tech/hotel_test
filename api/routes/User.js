@@ -44,7 +44,7 @@ userRouter.get("/verify", Controller.emailVerification);
 userRouter.post("/resend-verification", Controller.resendVerification);
 
 //GET: /api/v1/users/username
-userRouter.get("/username", Controller.searchUsername);
+userRouter.get("/username", middleware.protect, Controller.searchUsername);
 
 //GET: /api/v1/users/fullname
 userRouter.get("/fullname", Controller.searchByFullname);

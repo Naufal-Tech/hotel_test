@@ -5,6 +5,7 @@ const TokenVerifikasiDB = require("./tokenverifikasi.js");
 const OtpUserDB = require("./otpuser");
 const BookingDB = require("./booking");
 const ContactUsDB = require("./contactus");
+const BulkEmailDB = require("./bulkemail");
 
 const models = {
   UserDB,
@@ -14,6 +15,7 @@ const models = {
   OtpUserDB,
   BookingDB,
   ContactUsDB,
+  BulkEmailDB,
 };
 
 module.exports = models;

@@ -37,6 +37,14 @@ const BookingSchema = new mongoose.Schema({
     type: String,
   },
 
+  slug_layanan: {
+    type: String,
+  },
+
+  slug_fullname: {
+    type: String,
+  },
+
   is_active: {
     type: Boolean,
     default: false,
@@ -63,6 +71,16 @@ const BookingSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
   },
+});
+
+BookingSchema.pre("save", function (next) {
+  this.slug_layanan = slugify(this.layanan, { lower: true });
+  next();
+});
+
+BookingSchema.pre("save", function (next) {
+  this.slug_fullname = slugify(this.fullname, { lower: true });
+  next();
 });
 
 const BookingDB = mongoose.model("booking", BookingSchema, "booking");

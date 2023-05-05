@@ -42,12 +42,14 @@ const newsletterRouter = require("./routes/Newsletter");
 const bookingRouter = require("./routes/Booking");
 const userRouter = require("./routes/User");
 const contactUsRouter = require("./routes/ContactUs");
+const bulkEmailRouter = require("./routes/BulkEmail");
 
 // Routes:
 app.use("/api/v1/newsletter", newsletterRouter);
 app.use("/api/v1/booking", bookingRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/contact-us", contactUsRouter);
+app.use("/api/v1/bulkemail", bulkEmailRouter);
 
 // Setting Path:
 app.use("/images", express.static(path.join(__dirname, "./images")));

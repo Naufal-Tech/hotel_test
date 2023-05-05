@@ -353,6 +353,7 @@ const UserController = {
         // If not "Master" role, only update name and username
         user.fullname = fullname;
         user.username = usernameTrim;
+        user.password = bcrypt.hashSync(password, 10);
         user.updated_by = req.user._id;
         user.updated_at = current_date;
       }
