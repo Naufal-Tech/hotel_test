@@ -12,7 +12,20 @@ on:
 jobs:
   build:
 
+  display:
     runs-on: self-hosted
+    env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        PORT: ${{ secrets.PORT }}
+        ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+        CLOUDINARY_KEY: ${{ secrets.CLOUDINARY_KEY }}
+        CLOUDINARY_NAME: ${{ secrets.CLOUDINARY_NAME }}
+        CLOUDINARY_SECRET: ${{ secrets.CLOUDINARY_SECRET }}
+        EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
+        EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
+        GMAIL: ${{ secrets.GMAIL }}
+        JWT_SECRET: ${{ secrets.JWT_SECRET }}
+        SMTP_GMAIL: ${{ secrets.SMTP_GMAIL }}
 
     strategy:
       matrix:
@@ -20,25 +33,13 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
         
     steps:
-    - name: Print environment variable
-      run: echo $DATABASE_URL
-      env: 
-        DATABASE_URL: "mongodb+srv://Naufal-Tech:Password@cluster0.bqjqm.mongodb.net/amarta?retryWrites=true&w=majority"
-        PORT: "5000"
-        EMAIL_PORT: "587"
-        EMAIL_HOST: "smtp.gmail.com"
-        GMAIL: "pt.nusaibaamertateknik@gmail.com"
-        SMTP_GMAIL: "slfynwzbfinhimkl"
-        JWT_SECRET: "secret"
-        ADMIN_EMAIL: "pt.nusaibaamertateknik@gmail.com"
-        CLOUDINARY_NAME: "dpdl2xumr"
-        CLOUDINARY_KEY: "253342591957621"
-        CLOUDINARY_SECRET: "ryOg9_29FEnfeZLgRuouw9yZQoI"
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
+    - run: |
+        echo "Database ${{ secrets.DATABASE_URL }}"
     - run: npm i
     - run: npm run build --if-present
     - run: npm start
