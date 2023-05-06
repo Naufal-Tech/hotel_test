@@ -19,19 +19,6 @@ jobs:
         node-version: [18.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
         
-    env:
-        ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
-        CLOUDINARY_KEY: ${{ secrets.CLOUDINARY_KEY }}
-        CLOUDINARY_NAME: ${{ secrets.CLOUDINARY_NAME }}
-        CLOUDINARY_SECRET: ${{ secrets.CLOUDINARY_SECRET }}
-        DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
-        EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
-        GMAIL: ${{ secrets.GMAIL }}
-        JWT_SECRET: ${{ secrets.JWT_SECRET }}
-        PORT: ${{ secrets.PORT }}
-        SMTP_GMAIL: ${{ secrets.SMTP_GMAIL }}
-        
     steps:
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
