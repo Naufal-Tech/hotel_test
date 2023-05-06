@@ -39,6 +39,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
       env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        HOST: ${{ secrets.HOST }}
         ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
         CLOUDINARY_KEY: ${{ secrets.CLOUDINARY_KEY }}
         CLOUDINARY_NAME: ${{ secrets.CLOUDINARY_NAME }}
@@ -50,6 +52,8 @@ jobs:
         JWT_SECRET: ${{ secrets.JWT_SECRET }}
         PORT: ${{ secrets.PORT }}
         SMTP_GMAIL: ${{ secrets.SMTP_GMAIL }}
+        REMOTE_DESTINATION: "~/actions-runner/backend/amertabe/amertabe"
+        REMOTE_PATH: "~/actions-runner/backend/amertabe/amertabe"
     - run: echo "The secret key is $PORT"
     - run: npm i
     - run: npm run build --if-present
