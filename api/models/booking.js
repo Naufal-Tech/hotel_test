@@ -30,7 +30,7 @@ const BookingSchema = new mongoose.Schema({
   },
 
   phone: {
-    type: Number,
+    type: String,
   },
 
   keterangan: {

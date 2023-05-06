@@ -73,6 +73,14 @@ try {
   atlas();
 }
 
+// Define a simple route handler to indicate that the server is running
+app.use("/test", (req, res) => {
+  res.send("Server is running");
+});
+
+// Mount bulk email router
+app.use("/api/v1/bulkemail", bulkEmailRouter);
+
 //Error handlers middleware
 app.use(globalErrHandler);
 
