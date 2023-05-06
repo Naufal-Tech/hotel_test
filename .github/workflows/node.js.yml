@@ -20,6 +20,20 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
         
     steps:
+    - name: Print environment variable
+      run: echo $DATABASE_URL
+      env: 
+        DATABASE_URL: "mongodb+srv://Naufal-Tech:Password@cluster0.bqjqm.mongodb.net/amarta?retryWrites=true&w=majority"
+        PORT: "5000"
+        EMAIL_PORT: "587"
+        EMAIL_HOST: "smtp.gmail.com"
+        GMAIL: "pt.nusaibaamertateknik@gmail.com"
+        SMTP_GMAIL: "slfynwzbfinhimkl"
+        JWT_SECRET: "secret"
+        ADMIN_EMAIL: "pt.nusaibaamertateknik@gmail.com"
+        CLOUDINARY_NAME: "dpdl2xumr"
+        CLOUDINARY_KEY: "253342591957621"
+        CLOUDINARY_SECRET: "ryOg9_29FEnfeZLgRuouw9yZQoI"
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
