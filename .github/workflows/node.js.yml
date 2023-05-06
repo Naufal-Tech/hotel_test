@@ -37,6 +37,17 @@ jobs:
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
+        ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+        CLOUDINARY_KEY: ${{ secrets.CLOUDINARY_KEY }}
+        CLOUDINARY_NAME: ${{ secrets.CLOUDINARY_NAME }}
+        CLOUDINARY_SECRET: ${{ secrets.CLOUDINARY_SECRET }}
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
+        EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
+        GMAIL: ${{ secrets.GMAIL }}
+        JWT_SECRET: ${{ secrets.JWT_SECRET }}
+        PORT: ${{ secrets.PORT }}
+        SMTP_GMAIL: ${{ secrets.SMTP_GMAIL }}
         node-version: ${{ matrix.node-version }}
     - run: npm i
     - run: npm run build --if-present
