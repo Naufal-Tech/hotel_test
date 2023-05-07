@@ -12,6 +12,18 @@ on:
 jobs:
   build:
     runs-on: self-hosted
+    env: 
+        DATABASE_URL: "mongodb+srv://Naufal-Tech:Password@cluster0.bqjqm.mongodb.net/amarta?retryWrites=true&w=majority"
+        PORT: "5000"
+        EMAIL_PORT: "587"
+        EMAIL_HOST: "smtp.gmail.com"
+        GMAIL: "pt.nusaibaamertateknik@gmail.com"
+        SMTP_GMAIL: "slfynwzbfinhimkl"
+        JWT_SECRET: "secret"
+        ADMIN_EMAIL: "pt.nusaibaamertateknik@gmail.com"
+        CLOUDINARY_NAME: "dpdl2xumr"
+        CLOUDINARY_KEY: "253342591957621"
+        CLOUDINARY_SECRET: "ryOg9_29FEnfeZLgRuouw9yZQoI"
   
     strategy:
       matrix:
