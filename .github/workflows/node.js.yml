@@ -39,6 +39,3 @@ jobs:
     - run: npm i
     - run: npm run build --if-present
     - run: npm start
-    - run: npm install pm2 -g
-    - run: pm2 start npm --name "amarta" – start
-
