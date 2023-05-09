@@ -13,6 +13,7 @@ const BookingController = {
       longitude,
       phone,
       booking_date,
+      alamat,
     } = req.body;
 
     // Start a session
@@ -36,6 +37,7 @@ const BookingController = {
         longitude,
         phone,
         booking_date,
+        alamat,
       });
 
       // create reusable transporter object using the configuration
@@ -89,6 +91,7 @@ const BookingController = {
         <li>Service: ${layanan}</li>
         <li>Special Requests: ${permintaan_special || "None"}</li>
         <li>Location: (${latitude}, ${longitude})</li>
+        <li>Alamat: ${alamat}</li>
       </ul>
     `,
       };

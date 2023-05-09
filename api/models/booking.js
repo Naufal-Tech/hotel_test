@@ -9,6 +9,10 @@ const BookingSchema = new mongoose.Schema({
     type: String,
   },
 
+  alamat: {
+    type: String,
+  },
+
   layanan: {
     type: String,
   },
