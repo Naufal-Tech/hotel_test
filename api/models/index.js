@@ -6,6 +6,7 @@ const OtpUserDB = require("./otpuser");
 const BookingDB = require("./booking");
 const ContactUsDB = require("./contactus");
 const BulkEmailDB = require("./bulkemail");
+const AddressDB = require("./address");
 
 const models = {
   UserDB,
@@ -16,6 +17,7 @@ const models = {
   BookingDB,
   ContactUsDB,
   BulkEmailDB,
+  AddressDB,
 };
 
 module.exports = models;
