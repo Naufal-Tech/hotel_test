@@ -1,4 +1,8 @@
 const moment = require("moment-timezone");
+const twilio = require("twilio");
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const client = twilio(accountSid, authToken);
 
 const NewsletterController = {
   newsletter: async function (req, res) {
@@ -26,7 +30,7 @@ const NewsletterController = {
       if (existingEmail) {
         return response.error(
           400,
-          `A user with the Email: '${emailTrim}' already exists`,
+          `A user with the email '${emailTrim}' is already subscribed`,
           res
         );
       }
@@ -35,6 +39,25 @@ const NewsletterController = {
       const newsletter = await models.NewsletterDB.create({
         email,
       });
+
+      const sendWhatsAppMessage = async (message) => {
+        try {
+          const response = await client.messages.create({
+            body: message,
+            from: `whatsapp:${process.env.TWILIO_PHONE_NUMBER}`,
+            to: `whatsapp:${process.env.YOUR_PHONE_NUMBER}`,
+            // from: `whatsapp:+14155238886`,
+            // to: `whatsapp:+6287818411654`,
+          });
+          console.log("WhatsApp message sent:", response.sid);
+        } catch (error) {
+          console.error("Error sending WhatsApp message:", error);
+        }
+      };
+
+      // Send WhatsApp notification
+      const message = `New subscriber: ${newsletter.email}`;
+      sendWhatsAppMessage(message);
 
       // create reusable transporter object using the configuration
       let transporter = nodemailer.createTransport({
@@ -91,6 +114,7 @@ const NewsletterController = {
 
       //send respond databack ke postman
       res.status(201).json({
+        success: true,
         message: "Succesfully Subscribed to Newsletter",
         data: newsletter.email,
       });

@@ -38,12 +38,12 @@ app.use(function (req, res, next) {
 });
 
 // Routes:
-const newsletterRouter = require("./routes/Newsletter");
 const bookingRouter = require("./routes/Booking");
 const userRouter = require("./routes/User");
 const contactUsRouter = require("./routes/ContactUs");
 const bulkEmailRouter = require("./routes/BulkEmail");
 const addressRouter = require("./routes/Address");
+const newsletterRouter = require("./routes/Newsletter");
 
 // Routes:
 app.use("/api/v1/newsletter", newsletterRouter);
