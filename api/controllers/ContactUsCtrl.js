@@ -1,5 +1,9 @@
 const moment = require("moment-timezone");
 const current_date = moment().tz("Asia/Jakarta").format();
+const twilio = require("twilio");
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const client = twilio(accountSid, authToken);
 
 const ContactUsController = {
   addContactUs: async function (req, res, next) {
@@ -23,6 +27,34 @@ const ContactUsController = {
         keterangan,
         created_at: current_date,
       });
+
+      // Send WhatsApp notification with request body
+      const sendWhatsAppNotification = async () => {
+        const message = `
+  New contact inquiry:
+    Fullname: ${fullname}
+    Email: ${email}
+    Subject: ${subject}
+    Pesan: ${pesan}
+    Phone: ${phone}
+    Keterangan: ${keterangan}
+    Created Date: ${contactus.created_at}
+  `;
+
+        try {
+          const response = await client.messages.create({
+            body: message,
+            from: `whatsapp:${process.env.TWILIO_PHONE_NUMBER}`,
+            to: `whatsapp:${process.env.YOUR_PHONE_NUMBER}`,
+          });
+          console.log("WhatsApp notification sent:", response.sid);
+        } catch (error) {
+          console.error("Error sending WhatsApp notification:", error);
+        }
+      };
+
+      // Call the function to send WhatsApp notification
+      sendWhatsAppNotification();
 
       // create reusable transporter object using the configuration
       let transporter = nodemailer.createTransport({

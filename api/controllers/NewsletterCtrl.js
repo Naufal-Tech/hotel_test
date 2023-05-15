@@ -56,7 +56,9 @@ const NewsletterController = {
       };
 
       // Send WhatsApp notification
-      const message = `New subscriber: ${newsletter.email}`;
+      const message = `New subscriber: ${newsletter.email}
+      Created Date: ${newsletter.created_at}
+      `;
       sendWhatsAppMessage(message);
 
       // create reusable transporter object using the configuration

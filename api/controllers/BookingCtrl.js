@@ -57,6 +57,7 @@ const BookingController = {
           Longitude: ${longitude}
           Booking Date: ${booking_date}
           Alamat: ${alamat}
+          Created Date: ${booking.created_at}
   `;
 
         try {
