@@ -27,6 +27,15 @@ const BookingController = {
       return res.status(400).json({ error: "Invalid email address" });
     }
 
+    // Validate latitude and longitude
+    if (!latitude || !longitude) {
+      return res.status(400).json({
+        status: 400,
+        success: false,
+        message: "Please turn on Your GPS Web Browser and Refresh The Page",
+      });
+    }
+
     try {
       const options = { session };
       // Create the new `Category` document
