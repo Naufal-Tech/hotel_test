@@ -44,6 +44,9 @@ const contactUsRouter = require("./routes/ContactUs");
 const bulkEmailRouter = require("./routes/BulkEmail");
 const addressRouter = require("./routes/Address");
 const newsletterRouter = require("./routes/Newsletter");
+const careerRouter = require("./routes/Career");
+const applicantRouter = require("./routes/Applicant");
+const testimonialRouter = require("./routes/Testimonial");
 
 // Routes:
 app.use("/api/v1/newsletter", newsletterRouter);
@@ -52,6 +55,9 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/contact-us", contactUsRouter);
 app.use("/api/v1/bulkemail", bulkEmailRouter);
 app.use("/api/v1/address", addressRouter);
+app.use("/api/v1/career", careerRouter);
+app.use("/api/v1/applicant", applicantRouter);
+app.use("/api/v1/testimonial", testimonialRouter);
 
 // Setting Path:
 app.use("/images", express.static(path.join(__dirname, "./images")));
