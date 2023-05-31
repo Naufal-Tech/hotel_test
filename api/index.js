@@ -47,6 +47,7 @@ const newsletterRouter = require("./routes/Newsletter");
 const careerRouter = require("./routes/Career");
 const applicantRouter = require("./routes/Applicant");
 const testimonialRouter = require("./routes/Testimonial");
+const promoRouter = require("./routes/Promo");
 
 // Routes:
 app.use("/api/v1/newsletter", newsletterRouter);
@@ -58,6 +59,7 @@ app.use("/api/v1/address", addressRouter);
 app.use("/api/v1/career", careerRouter);
 app.use("/api/v1/applicant", applicantRouter);
 app.use("/api/v1/testimonial", testimonialRouter);
+app.use("/api/v1/promo", promoRouter);
 
 // Setting Path:
 app.use("/images", express.static(path.join(__dirname, "./images")));
@@ -80,6 +82,9 @@ try {
 } catch (error) {
   atlas();
 }
+
+/*** CRON SCHEDULER ***/
+const cron = require("../api/cron/index");
 
 // Define a simple route handler to indicate that the server is running
 app.use("/test", (req, res) => {

@@ -10,6 +10,7 @@ const AddressDB = require("./address");
 const CareerDB = require("./career");
 const ApplicantDB = require("./applicant");
 const TestimonialDB = require("./testimonial");
+const PromoDB = require("./promo");
 
 const models = {
   UserDB,
@@ -24,6 +25,7 @@ const models = {
   CareerDB,
   ApplicantDB,
   TestimonialDB,
+  PromoDB,
 };
 
 module.exports = models;
