@@ -17,6 +17,11 @@ const BookingController = {
       phone,
       booking_date,
       alamat,
+      provinsi,
+      kota,
+      kecamatan,
+      kelurahan,
+      postalCode,
     } = req.body;
 
     // Start a session
@@ -50,6 +55,11 @@ const BookingController = {
         phone,
         booking_date,
         alamat,
+        provinsi,
+        kota,
+        kecamatan,
+        kelurahan,
+        postalCode,
       });
 
       // Send WhatsApp notification with request body
@@ -65,7 +75,12 @@ const BookingController = {
           Latitude: ${latitude}
           Longitude: ${longitude}
           Booking Date: ${booking_date}
-          Alamat: ${alamat}
+          Alamat: ${alamat},
+          Provinsi: ${provinsi},
+          Kota: ${kota},
+          Kecamatan: ${kecamatan},
+          Kelurahan: ${kelurahan},
+          Kode Pos: ${postalCode},
           Created Date: ${booking.created_at}
   `;
 
@@ -136,6 +151,11 @@ const BookingController = {
         <li>Special Requests: ${permintaan_special || "None"}</li>
         <li>Location: (${latitude}, ${longitude})</li>
         <li>Alamat: ${alamat}</li>
+        <li>Provinsi: ${provinsi}</li>
+        <li>Kota: ${kota}</li>
+        <li>Kecamatan: ${kecamatan}</li>
+        <li>Kelurahan: ${kelurahan}</li>
+        <li>Kode Pos: ${postalCode}</li>
       </ul>
     `,
       };

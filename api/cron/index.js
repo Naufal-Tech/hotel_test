@@ -6,6 +6,6 @@ const options = {
 };
 
 // checking for expired wishlists sehari
-cron.schedule("* * * * *", checkingPromoExpired, options);
+cron.schedule("0 0 * * *", checkingPromoExpired, options);
 
 module.exports = { cron };

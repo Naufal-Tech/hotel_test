@@ -13,6 +13,26 @@ const BookingSchema = new mongoose.Schema({
     type: String,
   },
 
+  provinsi: {
+    type: String,
+  },
+
+  kota: {
+    type: String,
+  },
+
+  kecamatan: {
+    type: String,
+  },
+
+  kelurahan: {
+    type: String,
+  },
+
+  postalCode: {
+    type: String,
+  },
+
   layanan: {
     type: String,
   },
