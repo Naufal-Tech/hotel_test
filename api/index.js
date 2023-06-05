@@ -48,6 +48,12 @@ const careerRouter = require("./routes/Career");
 const applicantRouter = require("./routes/Applicant");
 const testimonialRouter = require("./routes/Testimonial");
 const promoRouter = require("./routes/Promo");
+const acRouter = require("./routes/GalleryAc");
+const mesinRouter = require("./routes/GalleryMesin");
+const listrikRouter = require("./routes/GalleryListrik");
+const sipilRouter = require("./routes/GallerySipil");
+const plumbingRouter = require("./routes/GalleryPlumbing");
+const homeRouter = require("./routes/GalleryHome");
 
 // Routes:
 app.use("/api/v1/newsletter", newsletterRouter);
@@ -60,6 +66,12 @@ app.use("/api/v1/career", careerRouter);
 app.use("/api/v1/applicant", applicantRouter);
 app.use("/api/v1/testimonial", testimonialRouter);
 app.use("/api/v1/promo", promoRouter);
+app.use("/api/v1/gallery-ac", acRouter);
+app.use("/api/v1/gallery-mesin", mesinRouter);
+app.use("/api/v1/gallery-listrik", listrikRouter);
+app.use("/api/v1/gallery-sipil", sipilRouter);
+app.use("/api/v1/gallery-plumbing", plumbingRouter);
+app.use("/api/v1/gallery-home", homeRouter);
 
 // Setting Path:
 app.use("/images", express.static(path.join(__dirname, "./images")));

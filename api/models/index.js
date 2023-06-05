@@ -11,6 +11,12 @@ const CareerDB = require("./career");
 const ApplicantDB = require("./applicant");
 const TestimonialDB = require("./testimonial");
 const PromoDB = require("./promo");
+const GalleryAcDB = require("./galleryac");
+const GalleryListrikDB = require("./gallerylistrik");
+const GalleryMesinDB = require("./gallerymesin");
+const GalleryPlumbingDB = require("./galleryplumbing");
+const GallerySipilDB = require("./gallerysipil");
+const GalleryHomeDB = require("./galleryhome");
 
 const models = {
   UserDB,
@@ -26,6 +32,12 @@ const models = {
   ApplicantDB,
   TestimonialDB,
   PromoDB,
+  GalleryAcDB,
+  GalleryListrikDB,
+  GalleryMesinDB,
+  GalleryPlumbingDB,
+  GallerySipilDB,
+  GalleryHomeDB,
 };
 
 module.exports = models;
