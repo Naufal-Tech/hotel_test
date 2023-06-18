@@ -124,6 +124,7 @@ const PromoController = {
       promo_description,
       promo_location,
       promo_condition,
+      promo_status,
       start_date,
       end_date,
     } = req.body;
@@ -192,6 +193,7 @@ const PromoController = {
       promo.promo_description = promo_description || promo.promo_description;
       promo.promo_location = promo_location || promo.promo_location;
       promo.promo_condition = promo_condition || promo.promo_condition;
+      promo.promo_status = promo_status || promo.promo_status;
       promo.start_date = start_date || promo.start_date;
       promo.end_date = end_date || promo.end_date;
       promo.promo_img = promo_img || promo.promo_img;
@@ -278,7 +280,7 @@ const PromoController = {
       const promo = await models.PromoDB.find({
         deleted_by: { $exists: false },
         deleted_time: { $exists: false },
-        promo_status: { $exists: false },
+        promo_status: { $exists: true },
       });
       return response.ok(promo, res, "Successfully retrieved All Promo");
     } catch (err) {
