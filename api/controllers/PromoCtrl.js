@@ -296,7 +296,7 @@ const PromoController = {
         _id: id,
         deleted_by: { $exists: false },
         deleted_time: { $exists: false },
-        promo_status: { $exists: false },
+        promo_status: { $exists: true },
       });
 
       if (!promo) {
