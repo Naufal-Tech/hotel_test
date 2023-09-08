@@ -32,3 +32,5 @@ FOLLOW THESE STEPS:
 6. On Seeding: kamar_hotel, just make user and adjusted hotel_id with existing hotel id in database
 7. cd ..
 8. npm start
+
+## LINK POSTMAN: https://documenter.getpostman.com/view/20393150/2s9YBz4bG1

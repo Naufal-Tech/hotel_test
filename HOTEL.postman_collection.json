@@ -1,0 +1,2773 @@
+{
+	"info": {
+		"_postman_id": "6b70dbd1-c836-461a-ae15-e2293ece9dc9",
+		"name": "HOTEL",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20393150"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nama\": \"ini delete\",\r\n    \"no_hp\": \"0099887766\",\r\n    \"alamat\": \"delete\",\r\n    \"sales_code\": \"delete\",\r\n    \"saldo\": 5000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_5000}}/users/register",
+							"host": [
+								"{{URL_5000}}"
+							],
+							"path": [
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Register User",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nama\": \"ini nama\",\r\n    \"no_hp\": \"asik123\",\r\n    \"alamat\": \"ini alamat\",\r\n    \"sales_code\": \"code\",\r\n    \"saldo\": 5000\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_5000}}/users/register",
+									"host": [
+										"{{URL_5000}}"
+									],
+									"path": [
+										"users",
+										"register"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "DELETE, PUT, GET, POST, PATCH"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Origin, X-Requested-With, Content-Type, Accept"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "250"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"fa-8AMsdUTRye5zjB8YuWfvyAZ9T90\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 07 Sep 2023 08:44:02 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"47706e35-c6e9-4868-bc8a-e028c7c0dcc7\",\n    \"nama\": \"ini nama\",\n    \"no_hp\": \"asik123\",\n    \"alamat\": \"ini alamat\",\n    \"sales_code\": \"code\",\n    \"saldo\": \"5000\",\n    \"created_at\": \"2023-09-07T08:44:02.008Z\",\n    \"updated_at\": null,\n    \"deleted_at\": null,\n    \"updated_by\": null,\n    \"deleted_by\": null\n}"
+						},
+						{
+							"name": "Phone Number in Use",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nama\": \"test\",\r\n    \"no_hp\": \"1234\",\r\n    \"alamat\": \"test\",\r\n    \"saldo\": 500000\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_5000}}/users/register",
+									"host": [
+										"{{URL_5000}}"
+									],
+									"path": [
+										"users",
+										"register"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "DELETE, PUT, GET, POST, PATCH"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Origin, X-Requested-With, Content-Type, Accept"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "43"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2b-Jyf14Na49L14VLLSOEEad97UyUA\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 Sep 2023 02:22:45 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Phone number is already in use.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Login User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json()\r",
+									"pm.globals.set(\"token\", jsonData.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"no_hp\": \"1234567890\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_5000}}/users/login",
+							"host": [
+								"{{URL_5000}}"
+							],
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Login User",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"no_hp\": \"1234567890\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_5000}}/users/login",
+									"host": [
+										"{{URL_5000}}"
+									],
+									"path": [
+										"users",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "DELETE, PUT, GET, POST, PATCH"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Origin, X-Requested-With, Content-Type, Accept"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "199"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"c7-qzDTnJu1VrckdNoZJBCHaTIIWRA\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 07 Sep 2023 08:51:54 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFiOWQ2YmNkLWJiZmQtNGIyZC05YjVkLWFiOGRmYmJkNGJlZCIsImlhdCI6MTY5NDA3NjcxNCwiZXhwIjoxNjk2NjY4NzE0fQ.KKI1j6QMx1DimfoUUaVX0kXkgkGhaV0YkUK3SsLiBIY\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"a1716ffb-795c-45bc-b333-8db97b2faac0\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_5000}}/users/delete",
+							"host": [
+								"{{URL_5000}}"
+							],
+							"path": [
+								"users",
+								"delete"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete User",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"549b95f0-2471-46fe-bae9-47ac9fe188ae\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_5000}}/users/delete",
+									"host": [
+										"{{URL_5000}}"
+									],
+									"path": [
+										"users",
+										"delete"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "DELETE, PUT, GET, POST, PATCH"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Origin, X-Requested-With, Content-Type, Accept"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "44"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2c-9SpmxH/72gGbuRPl26pJL4BeE2Q\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 07 Sep 2023 09:21:02 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"User soft-deleted successfully\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"id\": \"15fcf7c8-bcae-4f12-a92c-e190d28da985\",\r\n    \"nama\": \"UPDATE BERHASIL\",\r\n    \"no_hp\": \"1122334455\",\r\n    \"alamat\": \"Jalan kebenaran\",\r\n    \"sales_code\": \"wedeal\",\r\n    \"saldo\": 10000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_5000}}/users/update",
+							"host": [
+								"{{URL_5000}}"
+							],
+							"path": [
+								"users",
+								"update"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update User",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \r\n    \"id\": \"15fcf7c8-bcae-4f12-a92c-e190d28da985\",\r\n    \"nama\": \"UPDATE BERHASIL\",\r\n    \"no_hp\": \"1122334455\",\r\n    \"alamat\": \"Jalan kebenaran\",\r\n    \"sales_code\": \"wedeal\",\r\n    \"saldo\": 10000\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_5000}}/users/update",
+									"host": [
+										"{{URL_5000}}"
+									],
+									"path": [
+										"users",
+										"update"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "DELETE, PUT, GET, POST, PATCH"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Origin, X-Requested-With, Content-Type, Accept"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "275"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"113-xA7GowA6wAPsUfX+cR8ERtTQwy4\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 07 Sep 2023 09:37:51 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"user\": {\n        \"id\": \"15fcf7c8-bcae-4f12-a92c-e190d28da985\",\n        \"nama\": \"UPDATE BERHASIL\",\n        \"no_hp\": \"1122334455\",\n        \"alamat\": \"Jalan kebenaran\",\n        \"sales_code\": \"wedeal\",\n        \"saldo\": 10000,\n        \"created_at\": \"2023-09-07T09:27:43.703Z\",\n        \"updated_at\": null,\n        \"deleted_at\": null,\n        \"updated_by\": null,\n        \"deleted_by\": null\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "All Users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_5000}}/users",
+							"host": [
+								"{{URL_5000}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "All Users",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL_5000}}/users",
+									"host": [
+										"{{URL_5000}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "DELETE, PUT, GET, POST, PATCH"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Origin, X-Requested-With, Content-Type, Accept"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1276"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"4fc-rC4/cuie/EZN2H5RDSQaA+kUlrU\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 07 Sep 2023 09:48:26 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": \"1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed\",\n        \"nama\": \"John Doe\",\n        \"no_hp\": \"1234567890\",\n        \"alamat\": \"123 Main St\",\n        \"sales_code\": \"ABC123\",\n        \"saldo\": \"1000\",\n        \"created_at\": \"2023-09-07T08:42:26.330Z\",\n        \"updated_at\": null,\n        \"deleted_at\": null,\n        \"updated_by\": null,\n        \"deleted_by\": null\n    },\n    {\n        \"id\": \"1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4boy\",\n        \"nama\": \"Jane\",\n        \"no_hp\": \"12345\",\n        \"alamat\": \"Jalan Street\",\n        \"sales_code\": \"123456\",\n        \"saldo\": \"1000\",\n        \"created_at\": \"2023-09-07T08:42:26.330Z\",\n        \"updated_at\": null,\n        \"deleted_at\": null,\n        \"updated_by\": null,\n        \"deleted_by\": null\n    },\n    {\n        \"id\": \"1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4lol\",\n        \"nama\": \"Siska\",\n        \"no_hp\": \"67890\",\n        \"alamat\": \"Jalan Jalan\",\n        \"sales_code\": \"666666\",\n        \"saldo\": \"1000\",\n        \"created_at\": \"2023-09-07T08:42:26.330Z\",\n        \"updated_at\": null,\n        \"deleted_at\": null,\n        \"updated_by\": null,\n        \"deleted_by\": null\n    },\n    {\n        \"id\": \"47706e35-c6e9-4868-bc8a-e028c7c0dcc7\",\n        \"nama\": \"ini nama\",\n        \"no_hp\": \"asik123\",\n        \"alamat\": \"ini alamat\",\n        \"sales_code\": \"code\",\n        \"saldo\": \"5000\",\n        \"created_at\": \"2023-09-07T08:44:02.008Z\",\n        \"updated_at\": null,\n        \"deleted_at\": null,\n        \"updated_by\": null,\n        \"deleted_by\": null\n    },\n    {\n        \"id\": \"15fcf7c8-bcae-4f12-a92c-e190d28da985\",\n        \"nama\": \"UPDATE BERHASIL\",\n        \"no_hp\": \"1122334455\",\n        \"alamat\": \"Jalan kebenaran\",\n        \"sales_code\": \"wedeal\",\n        \"saldo\": \"10000\",\n        \"created_at\": \"2023-09-07T09:27:43.703Z\",\n        \"updated_at\": null,\n        \"deleted_at\": null,\n        \"updated_by\": null,\n        \"deleted_by\": null\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Detail User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_5000}}/users/detail/1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed",
+							"host": [
+								"{{URL_5000}}"
+							],
+							"path": [
+								"users",
+								"detail",
+								"1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Detail User",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL_5000}}/users/detail/1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed",
+									"host": [
+										"{{URL_5000}}"
+									],
+									"path": [
+										"users",
+										"detail",
+										"1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "DELETE, PUT, GET, POST, PATCH"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Origin, X-Requested-With, Content-Type, Accept"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "256"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"100-ahRjI3hTmWDR1LVGag9wBKKU/B0\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 07 Sep 2023 09:58:21 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed\",\n    \"nama\": \"John Doe\",\n    \"no_hp\": \"1234567890\",\n    \"alamat\": \"123 Main St\",\n    \"sales_code\": \"ABC123\",\n    \"saldo\": \"1000\",\n    \"created_at\": \"2023-09-07T08:42:26.330Z\",\n    \"updated_at\": null,\n    \"deleted_at\": null,\n    \"updated_by\": null,\n    \"deleted_by\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "View Profile",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": [
+						{
+							"name": "View Profile",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL_5000}}/users/view-profile",
+									"host": [
+										"{{URL_5000}}"
+									],
+									"path": [
+										"users",
+										"view-profile"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "DELETE, PUT, GET, POST, PATCH"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Origin, X-Requested-With, Content-Type, Accept"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "233"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"e9-Q1ITdtXYDMHQv0YQD9sWX1sLlII\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 07 Sep 2023 14:01:22 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"1944b06a-3adc-4b43-bff8-3224f6a2437c\",\n    \"nama\": \"test\",\n    \"no_hp\": \"1234\",\n    \"alamat\": \"test\",\n    \"sales_code\": \"{}\",\n    \"saldo\": null,\n    \"created_at\": \"2023-09-07T13:57:37.903Z\",\n    \"updated_at\": null,\n    \"deleted_at\": null,\n    \"updated_by\": null,\n    \"deleted_by\": null\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Hotel",
+			"item": [
+				{
+					"name": "Add Hotel",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"nama\": \"Melati\",\r\n    \"alamat\": \"Jalan kuy\",\r\n    \"no_hp\": \"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_5000}}/hotel",
+							"host": [
+								"{{URL_5000}}"
+							],
+							"path": [
+								"hotel"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Add Hotel",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \r\n    \"nama\": \"Melati\",\r\n    \"alamat\": \"Jalan kuy\",\r\n    \"no_hp\": \"1234\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_5000}}/hotel",
+									"host": [
+										"{{URL_5000}}"
+									],
+									"path": [
+										"hotel"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "DELETE, PUT, GET, POST, PATCH"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Origin, X-Requested-With, Content-Type, Accept"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "173"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"ad-VCcKLNMFNZqbP9TymNtJIhQHAC4\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 07 Sep 2023 14:14:55 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"5becda80-eb6c-4dbe-912a-4df67da660f9\",\n    \"nama\": \"Melati\",\n    \"alamat\": \"Jalan kuy\",\n    \"no_hp\": \"1234\",\n    \"created_at\": \"2023-09-07T14:14:55.179Z\",\n    \"updated_at\": null,\n    \"deleted_at\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "Edit Hotel",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"id\": \"5becda80-eb6c-4dbe-912a-4df67da660f9\",\r\n    \"nama\": \"Bintang 5\",\r\n    \"alamat\": \"Jalan Baru\",\r\n    \"no_hp\": \"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_5000}}/hotel/update",
+							"host": [
+								"{{URL_5000}}"
+							],
+							"path": [
+								"hotel",
+								"update"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Edit Hotel",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \r\n    \"id\": \"5becda80-eb6c-4dbe-912a-4df67da660f9\",\r\n    \"nama\": \"Bintang 5\",\r\n    \"alamat\": \"Jalan Baru\",\r\n    \"no_hp\": \"1234\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_5000}}/hotel/update",
+									"host": [
+										"{{URL_5000}}"
+									],
+									"path": [
+										"hotel",
+										"update"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "DELETE, PUT, GET, POST, PATCH"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Origin, X-Requested-With, Content-Type, Accept"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "187"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"bb-vEOoDG9xAnYCgM4hG/5RI40C/Yk\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 07 Sep 2023 14:22:34 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"hotel\": {\n        \"id\": \"5becda80-eb6c-4dbe-912a-4df67da660f9\",\n        \"nama\": \"Bintang 5\",\n        \"alamat\": \"Jalan Baru\",\n        \"no_hp\": \"1234\",\n        \"created_at\": \"2023-09-07T14:14:55.179Z\",\n        \"updated_at\": null,\n        \"deleted_at\": null\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Remove Hotel",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"83fcf349-9155-4a86-9c40-1986d103ac7d\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_5000}}/hotel/delete",
+							"host": [
+								"{{URL_5000}}"
+							],
+							"path": [
+								"hotel",
+								"delete"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Remove Hotel",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"83fcf349-9155-4a86-9c40-1986d103ac7d\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_5000}}/hotel/delete",
+									"host": [
+										"{{URL_5000}}"
+									],
+									"path": [
+										"hotel",
+										"delete"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "DELETE, PUT, GET, POST, PATCH"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Origin, X-Requested-With, Content-Type, Accept"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "45"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2d-VKLM/eUCP40VKsd3gyVTyHb4h7g\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 07 Sep 2023 14:42:14 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Hotel soft-deleted successfully\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Detail Hotel",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_5000}}/hotel/detail/5b1972c0-4383-4249-bba3-d520c7a02a37",
+							"host": [
+								"{{URL_5000}}"
+							],
+							"path": [
+								"hotel",
+								"detail",
+								"5b1972c0-4383-4249-bba3-d520c7a02a37"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Detail Hotel",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL_5000}}/hotel/detail/5b1972c0-4383-4249-bba3-d520c7a02a37",
+									"host": [
+										"{{URL_5000}}"
+									],
+									"path": [
+										"hotel",
+										"detail",
+										"5b1972c0-4383-4249-bba3-d520c7a02a37"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "DELETE, PUT, GET, POST, PATCH"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Origin, X-Requested-With, Content-Type, Accept"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "190"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"be-0Hx5GyBc8BnXnygWw6/VEqtan3c\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 07 Sep 2023 14:50:27 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"5b1972c0-4383-4249-bba3-d520c7a02a37\",\n    \"nama\": \"Hotel C\",\n    \"alamat\": \"789 Oak St, City C\",\n    \"no_hp\": \"+5555555555\",\n    \"created_at\": \"2023-09-07T13:23:57.620Z\",\n    \"updated_at\": null,\n    \"deleted_at\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "View All Hotel",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_5000}}/hotel",
+							"host": [
+								"{{URL_5000}}"
+							],
+							"path": [
+								"hotel"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "View All Hotel",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL_5000}}/hotel",
+									"host": [
+										"{{URL_5000}}"
+									],
+									"path": [
+										"hotel"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "DELETE, PUT, GET, POST, PATCH"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Origin, X-Requested-With, Content-Type, Accept"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "927"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"39f-HhigGc5/GRTyFF/qB7RUIo8B4Yc\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 07 Sep 2023 14:51:52 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": \"93652427-d1aa-46b1-a44d-b5a8737ed606\",\n        \"nama\": \"Hotel A\",\n        \"alamat\": \"123 Main St, City A\",\n        \"no_hp\": \"+1234567890\",\n        \"created_at\": \"2023-09-07T13:23:57.620Z\",\n        \"updated_at\": null,\n        \"deleted_at\": null\n    },\n    {\n        \"id\": \"6ab871b8-ce73-4291-a8b2-e98995ec225c\",\n        \"nama\": \"Hotel B\",\n        \"alamat\": \"456 Elm St, City B\",\n        \"no_hp\": \"+9876543210\",\n        \"created_at\": \"2023-09-07T13:23:57.620Z\",\n        \"updated_at\": null,\n        \"deleted_at\": null\n    },\n    {\n        \"id\": \"5b1972c0-4383-4249-bba3-d520c7a02a37\",\n        \"nama\": \"Hotel C\",\n        \"alamat\": \"789 Oak St, City C\",\n        \"no_hp\": \"+5555555555\",\n        \"created_at\": \"2023-09-07T13:23:57.620Z\",\n        \"updated_at\": null,\n        \"deleted_at\": null\n    },\n    {\n        \"id\": \"5becda80-eb6c-4dbe-912a-4df67da660f9\",\n        \"nama\": \"Bintang 5\",\n        \"alamat\": \"Jalan Baru\",\n        \"no_hp\": \"1234\",\n        \"created_at\": \"2023-09-07T14:14:55.179Z\",\n        \"updated_at\": null,\n        \"deleted_at\": null\n    },\n    {\n        \"id\": \"87af94d9-5ac9-4a96-b421-7d26e380d682\",\n        \"nama\": \"Melati\",\n        \"alamat\": \"Jalan kuy\",\n        \"no_hp\": \"1234\",\n        \"created_at\": \"2023-09-07T14:24:18.580Z\",\n        \"updated_at\": null,\n        \"deleted_at\": null\n    }\n]"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Kamar Hotel",
+			"item": [
+				{
+					"name": "Create Kamar Hotel",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"hotel_id\": \"5becda80-eb6c-4dbe-912a-4df67da660f9\",\r\n    \"name_kamar\": \"Mewah\",\r\n    \"nomor_kamar\": \"212\",\r\n    \"harga\": \"2000\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_5000}}/kamar",
+							"host": [
+								"{{URL_5000}}"
+							],
+							"path": [
+								"kamar"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Kamar Hotel",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"hotel_id\": \"5becda80-eb6c-4dbe-912a-4df67da660f9\",\r\n    \"name_kamar\": \"Mewah\",\r\n    \"nomor_kamar\": \"212\",\r\n    \"harga\": \"2000\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_5000}}/kamar",
+									"host": [
+										"{{URL_5000}}"
+									],
+									"path": [
+										"kamar"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "DELETE, PUT, GET, POST, PATCH"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Origin, X-Requested-With, Content-Type, Accept"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "244"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"f4-DD0NOVQBEoFXrmRv/AfAsB613uI\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 07 Sep 2023 15:54:43 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"9252c16d-7dcc-4938-84be-6bdf4fd91c32\",\n    \"hotel_id\": \"5becda80-eb6c-4dbe-912a-4df67da660f9\",\n    \"name_kamar\": \"Mewah\",\n    \"nomor_kamar\": \"212\",\n    \"harga\": \"2000\",\n    \"created_at\": \"2023-09-07T15:54:43.428Z\",\n    \"deskripsi\": null,\n    \"updated_at\": null,\n    \"deleted_at\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Kamar Hotel",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"id\": \"cae73e9b-d331-41dc-a25e-25d43d8c0997\",\r\n    \"hotel_id\": \"8e64ded6-fcf5-4b25-82af-3f8069f371d3\",\r\n    \"name_kamar\": \"kamar golden\",\r\n    \"nomor_kamar\": \"666\",\r\n    \"harga\": 2000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_5000}}/kamar/update",
+							"host": [
+								"{{URL_5000}}"
+							],
+							"path": [
+								"kamar",
+								"update"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update Kamar Hotel",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \r\n    \"id\": \"cae73e9b-d331-41dc-a25e-25d43d8c0997\",\r\n    \"hotel_id\": \"8e64ded6-fcf5-4b25-82af-3f8069f371d3\",\r\n    \"name_kamar\": \"kamar golden\",\r\n    \"nomor_kamar\": \"666\",\r\n    \"harga\": 2000\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_5000}}/kamar/update",
+									"host": [
+										"{{URL_5000}}"
+									],
+									"path": [
+										"kamar",
+										"update"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "DELETE, PUT, GET, POST, PATCH"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Origin, X-Requested-With, Content-Type, Accept"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "259"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"103-rme899mehPh4zltF2kBVRMRtT00\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 Sep 2023 03:04:26 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"kamar\": {\n        \"id\": \"cae73e9b-d331-41dc-a25e-25d43d8c0997\",\n        \"hotel_id\": \"8e64ded6-fcf5-4b25-82af-3f8069f371d3\",\n        \"name_kamar\": \"kamar golden\",\n        \"nomor_kamar\": \"666\",\n        \"harga\": 2000,\n        \"deskripsi\": null,\n        \"created_at\": \"2023-09-08T03:03:04.991Z\",\n        \"updated_at\": null,\n        \"deleted_at\": null\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "View All Kamar Hotel",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_5000}}/kamar",
+							"host": [
+								"{{URL_5000}}"
+							],
+							"path": [
+								"kamar"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "View All Kamar Hotel",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL_5000}}/kamar",
+									"host": [
+										"{{URL_5000}}"
+									],
+									"path": [
+										"kamar"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "DELETE, PUT, GET, POST, PATCH"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Origin, X-Requested-With, Content-Type, Accept"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1017"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3f9-VCYMXZ6zzfGDr5fzZywpY/WmcdM\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 Sep 2023 03:43:22 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": \"b0a9b6cb-91d4-49cc-b2fe-abe62a54843a\",\n        \"hotel_id\": \"8e64ded6-fcf5-4b25-82af-3f8069f371d3\",\n        \"name_kamar\": \"Room A\",\n        \"nomor_kamar\": \"101\",\n        \"harga\": \"1000\",\n        \"deskripsi\": \"Standard Room\",\n        \"created_at\": \"2023-09-08T02:18:47.399Z\",\n        \"updated_at\": null,\n        \"deleted_at\": null\n    },\n    {\n        \"id\": \"f8e12554-1fef-496f-8334-e9d1b21655f4\",\n        \"hotel_id\": \"beaa5211-cda5-4af7-9a1d-acd95552f883\",\n        \"name_kamar\": \"Room B\",\n        \"nomor_kamar\": \"102\",\n        \"harga\": \"10000\",\n        \"deskripsi\": \"Deluxe Room\",\n        \"created_at\": \"2023-09-08T02:18:47.399Z\",\n        \"updated_at\": null,\n        \"deleted_at\": null\n    },\n    {\n        \"id\": \"ca7a50ef-c880-4e6a-b8df-36ffade761d0\",\n        \"hotel_id\": \"d6b01db1-3e30-49ed-92f0-cf6d809a4f36\",\n        \"name_kamar\": \"Room C\",\n        \"nomor_kamar\": \"103\",\n        \"harga\": \"100000\",\n        \"deskripsi\": \"Suite\",\n        \"created_at\": \"2023-09-08T02:18:47.399Z\",\n        \"updated_at\": null,\n        \"deleted_at\": null\n    },\n    {\n        \"id\": \"cae73e9b-d331-41dc-a25e-25d43d8c0997\",\n        \"hotel_id\": \"8e64ded6-fcf5-4b25-82af-3f8069f371d3\",\n        \"name_kamar\": \"kamar golden\",\n        \"nomor_kamar\": \"666\",\n        \"harga\": \"2000\",\n        \"deskripsi\": null,\n        \"created_at\": \"2023-09-08T03:03:04.991Z\",\n        \"updated_at\": null,\n        \"deleted_at\": null\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Detail View Kamar Hotel",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_5000}}/kamar/detail/b0a9b6cb-91d4-49cc-b2fe-abe62a54843a",
+							"host": [
+								"{{URL_5000}}"
+							],
+							"path": [
+								"kamar",
+								"detail",
+								"b0a9b6cb-91d4-49cc-b2fe-abe62a54843a"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Detail View Kamar Hotel",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_5000}}/kamar/detail/b0a9b6cb-91d4-49cc-b2fe-abe62a54843a",
+									"host": [
+										"{{URL_5000}}"
+									],
+									"path": [
+										"kamar",
+										"detail",
+										"b0a9b6cb-91d4-49cc-b2fe-abe62a54843a"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "DELETE, PUT, GET, POST, PATCH"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Origin, X-Requested-With, Content-Type, Accept"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "256"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"100-BPqysLE9fEOw8ceT+4KbPiyfH/Y\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 Sep 2023 05:48:01 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"b0a9b6cb-91d4-49cc-b2fe-abe62a54843a\",\n    \"hotel_id\": \"8e64ded6-fcf5-4b25-82af-3f8069f371d3\",\n    \"name_kamar\": \"Room A\",\n    \"nomor_kamar\": \"101\",\n    \"harga\": \"1000\",\n    \"deskripsi\": \"Standard Room\",\n    \"created_at\": \"2023-09-08T02:18:47.399Z\",\n    \"updated_at\": null,\n    \"deleted_at\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Kamar Hotel",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"86229dbb-35db-4751-9c08-e8b1b76b0f05\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_5000}}/kamar/delete",
+							"host": [
+								"{{URL_5000}}"
+							],
+							"path": [
+								"kamar",
+								"delete"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete Kamar Hotel",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"86229dbb-35db-4751-9c08-e8b1b76b0f05\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_5000}}/kamar/delete",
+									"host": [
+										"{{URL_5000}}"
+									],
+									"path": [
+										"kamar",
+										"delete"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "DELETE, PUT, GET, POST, PATCH"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Origin, X-Requested-With, Content-Type, Accept"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "45"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2d-nTVrGolkPqLEkrlbrYUrAYdXcGU\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 Sep 2023 05:50:01 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Kamar soft-deleted successfully\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Sales",
+			"item": [
+				{
+					"name": "Create Sales",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"name\": \"cool\",\r\n    \"email\": \"cool@gmail.com\",\r\n    \"coupon\": \"cool\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_5000}}/sales",
+							"host": [
+								"{{URL_5000}}"
+							],
+							"path": [
+								"sales"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Sales",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \r\n    \"name\": \"weleh\",\r\n    \"email\": \"weleh@gmail.com\",\r\n    \"coupon\": \"weleh\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_5000}}/sales",
+									"host": [
+										"{{URL_5000}}"
+									],
+									"path": [
+										"sales"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "DELETE, PUT, GET, POST, PATCH"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Origin, X-Requested-With, Content-Type, Accept"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "251"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"fb-Mnhk3ux/t+4sd/mwSymF/HefzeI\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 Sep 2023 06:15:38 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"3b89ce4b-49c8-4539-bf7a-1b5028df33d7\",\n    \"name\": \"weleh\",\n    \"email\": \"weleh@gmail.com\",\n    \"coupon\": \"weleh\",\n    \"created_at\": \"2023-09-08T06:15:38.027Z\",\n    \"total_commission\": null,\n    \"sales_commission\": null,\n    \"owner_commission\": null,\n    \"updated_at\": null,\n    \"deleted_at\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Sales",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"id\": \"3b89ce4b-49c8-4539-bf7a-1b5028df33d7\",\r\n    \"name\": \"update sales\",\r\n    \"email\": \"update@gmail.com\",\r\n    \"coupon\": \"update\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_5000}}/sales/update",
+							"host": [
+								"{{URL_5000}}"
+							],
+							"path": [
+								"sales",
+								"update"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update Sales",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \r\n    \"id\": \"3b89ce4b-49c8-4539-bf7a-1b5028df33d7\",\r\n    \"name\": \"update sales\",\r\n    \"email\": \"update@gmail.com\",\r\n    \"coupon\": \"update\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_5000}}/sales/update",
+									"host": [
+										"{{URL_5000}}"
+									],
+									"path": [
+										"sales",
+										"update"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "DELETE, PUT, GET, POST, PATCH"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Origin, X-Requested-With, Content-Type, Accept"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "270"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"10e-xcIfeYpkvBEYWeqy6W66TlCGTPI\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 Sep 2023 06:21:21 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"sales\": {\n        \"id\": \"3b89ce4b-49c8-4539-bf7a-1b5028df33d7\",\n        \"name\": \"update sales\",\n        \"email\": \"update@gmail.com\",\n        \"coupon\": \"update\",\n        \"total_commission\": null,\n        \"sales_commission\": null,\n        \"owner_commission\": null,\n        \"created_at\": \"2023-09-08T06:15:38.027Z\",\n        \"updated_at\": null,\n        \"deleted_at\": null\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "View All Sales",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_5000}}/sales",
+							"host": [
+								"{{URL_5000}}"
+							],
+							"path": [
+								"sales"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "View All Sales",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL_5000}}/sales",
+									"host": [
+										"{{URL_5000}}"
+									],
+									"path": [
+										"sales"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "DELETE, PUT, GET, POST, PATCH"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Origin, X-Requested-With, Content-Type, Accept"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "828"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"33c-3CLTIYaJVXBCIQS/+qyDgmUPGO8\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 Sep 2023 06:23:07 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": \"d0aca014-f4cf-4263-95f1-3cfe82dae019\",\n        \"name\": \"John Doe\",\n        \"email\": \"john.doe@example.com\",\n        \"coupon\": \"john\",\n        \"total_commission\": null,\n        \"sales_commission\": null,\n        \"owner_commission\": null,\n        \"created_at\": \"2023-09-08T02:18:57.548Z\",\n        \"updated_at\": \"2023-09-08T02:18:57.548Z\",\n        \"deleted_at\": null\n    },\n    {\n        \"id\": \"e56ddcda-4f53-4e8d-8374-06efe06fe083\",\n        \"name\": \"Jane Smith\",\n        \"email\": \"jane.smith@example.com\",\n        \"coupon\": \"jane\",\n        \"total_commission\": null,\n        \"sales_commission\": null,\n        \"owner_commission\": null,\n        \"created_at\": \"2023-09-08T02:18:57.548Z\",\n        \"updated_at\": \"2023-09-08T02:18:57.548Z\",\n        \"deleted_at\": null\n    },\n    {\n        \"id\": \"3b89ce4b-49c8-4539-bf7a-1b5028df33d7\",\n        \"name\": \"update sales\",\n        \"email\": \"update@gmail.com\",\n        \"coupon\": \"update\",\n        \"total_commission\": null,\n        \"sales_commission\": null,\n        \"owner_commission\": null,\n        \"created_at\": \"2023-09-08T06:15:38.027Z\",\n        \"updated_at\": null,\n        \"deleted_at\": null\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Detail Sales",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_5000}}/sales/detail/3b89ce4b-49c8-4539-bf7a-1b5028df33d7",
+							"host": [
+								"{{URL_5000}}"
+							],
+							"path": [
+								"sales",
+								"detail",
+								"3b89ce4b-49c8-4539-bf7a-1b5028df33d7"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Detail Sales",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL_5000}}/sales/detail/3b89ce4b-49c8-4539-bf7a-1b5028df33d7",
+									"host": [
+										"{{URL_5000}}"
+									],
+									"path": [
+										"sales",
+										"detail",
+										"3b89ce4b-49c8-4539-bf7a-1b5028df33d7"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "DELETE, PUT, GET, POST, PATCH"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Origin, X-Requested-With, Content-Type, Accept"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "260"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"104-7uK4Qlmaazgr6XGbaAvqP+h3iiA\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 Sep 2023 06:25:17 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"3b89ce4b-49c8-4539-bf7a-1b5028df33d7\",\n    \"name\": \"update sales\",\n    \"email\": \"update@gmail.com\",\n    \"coupon\": \"update\",\n    \"total_commission\": null,\n    \"sales_commission\": null,\n    \"owner_commission\": null,\n    \"created_at\": \"2023-09-08T06:15:38.027Z\",\n    \"updated_at\": null,\n    \"deleted_at\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Sales",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"51d1ff6b-6d62-4db3-b948-2ceb76bb9634\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_5000}}/sales/delete",
+							"host": [
+								"{{URL_5000}}"
+							],
+							"path": [
+								"sales",
+								"delete"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete Sales",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"51d1ff6b-6d62-4db3-b948-2ceb76bb9634\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_5000}}/sales/delete",
+									"host": [
+										"{{URL_5000}}"
+									],
+									"path": [
+										"sales",
+										"delete"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "DELETE, PUT, GET, POST, PATCH"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Origin, X-Requested-With, Content-Type, Accept"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "45"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2d-uErCM6Uv9OQRN97INhWA5odKz1Y\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 Sep 2023 06:28:39 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Sales soft-deleted successfully\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Booking",
+			"item": [
+				{
+					"name": "Create Booking",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\": \"71c5284f-1ebb-4209-ac6b-74f24d7b7acf\",\r\n    \"kamar_id\": \"cd388bef-85a9-4c42-9fa0-9beb16fa8563\",\r\n    \"sales_code\": \"exist\",\r\n    \"tanggal_check_in\": \"2023-09-10\",\r\n    \"tanggal_check_out\": \"2023-09-13\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_5000}}/booking",
+							"host": [
+								"{{URL_5000}}"
+							],
+							"path": [
+								"booking"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Booking 1 Day",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"user_id\": \"63d34176-df8c-4947-b2d2-7b62750db767\",\r\n    \"kamar_id\": \"ca7a50ef-c880-4e6a-b8df-36ffade761d0\",\r\n    \"sales_code\": \"weleh\",\r\n    \"tanggal_check_in\": \"2023-09-10\",\r\n    \"tanggal_check_out\": \"2023-09-11\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_5000}}/booking",
+									"host": [
+										"{{URL_5000}}"
+									],
+									"path": [
+										"booking"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "DELETE, PUT, GET, POST, PATCH"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Origin, X-Requested-With, Content-Type, Accept"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "466"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1d2-gIMMgF0e6Dp5u1w4umLBN9hh75I\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 Sep 2023 07:12:37 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"762b8f93-70d6-4c5a-bf03-c3e94e6a2e2f\",\n    \"user_id\": \"63d34176-df8c-4947-b2d2-7b62750db767\",\n    \"kamar_id\": \"ca7a50ef-c880-4e6a-b8df-36ffade761d0\",\n    \"harga_kamar\": \"100000\",\n    \"pendapatan_bersih\": \"80000\",\n    \"pendapatan_sales\": \"20000\",\n    \"sales_code\": \"weleh\",\n    \"tanggal_check_in\": \"2023-09-10T00:00:00.000Z\",\n    \"tanggal_check_out\": \"2023-09-11T00:00:00.000Z\",\n    \"created_at\": \"2023-09-08T07:12:37.350Z\",\n    \"updated_at\": null,\n    \"deleted_at\": null,\n    \"created_by\": null,\n    \"updated_by\": null,\n    \"deleted_by\": null\n}"
+						},
+						{
+							"name": "Create Booking 2 Days",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"user_id\": \"63d34176-df8c-4947-b2d2-7b62750db767\",\r\n    \"kamar_id\": \"ca7a50ef-c880-4e6a-b8df-36ffade761d0\",\r\n    \"sales_code\": \"weleh\",\r\n    \"tanggal_check_in\": \"2023-09-10\",\r\n    \"tanggal_check_out\": \"2023-09-12\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_5000}}/booking",
+									"host": [
+										"{{URL_5000}}"
+									],
+									"path": [
+										"booking"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "DELETE, PUT, GET, POST, PATCH"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Origin, X-Requested-With, Content-Type, Accept"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "467"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1d3-u11pGWrnu+n5+LbhLMBbaB8HN2w\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 Sep 2023 07:13:39 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"b54cdec9-dcf4-41cf-9aee-b0e3844e96b7\",\n    \"user_id\": \"63d34176-df8c-4947-b2d2-7b62750db767\",\n    \"kamar_id\": \"ca7a50ef-c880-4e6a-b8df-36ffade761d0\",\n    \"harga_kamar\": \"200000\",\n    \"pendapatan_bersih\": \"160000\",\n    \"pendapatan_sales\": \"40000\",\n    \"sales_code\": \"weleh\",\n    \"tanggal_check_in\": \"2023-09-10T00:00:00.000Z\",\n    \"tanggal_check_out\": \"2023-09-12T00:00:00.000Z\",\n    \"created_at\": \"2023-09-08T07:13:39.975Z\",\n    \"updated_at\": null,\n    \"deleted_at\": null,\n    \"created_by\": null,\n    \"updated_by\": null,\n    \"deleted_by\": null\n}"
+						},
+						{
+							"name": "Create Booking",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"user_id\": \"71c5284f-1ebb-4209-ac6b-74f24d7b7acf\",\r\n    \"kamar_id\": \"cd388bef-85a9-4c42-9fa0-9beb16fa8563\",\r\n    \"sales_code\": \"weleh\",\r\n    \"tanggal_check_in\": \"2023-09-10\",\r\n    \"tanggal_check_out\": \"2023-09-11\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_5000}}/booking",
+									"host": [
+										"{{URL_5000}}"
+									],
+									"path": [
+										"booking"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "DELETE, PUT, GET, POST, PATCH"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Origin, X-Requested-With, Content-Type, Accept"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "466"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1d2-E9BKqkyXaZeIae1nyVcOnoGnoB8\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 Sep 2023 07:46:13 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"13b3e446-5cc1-4a39-bbd1-96d96a269ec9\",\n    \"user_id\": \"71c5284f-1ebb-4209-ac6b-74f24d7b7acf\",\n    \"kamar_id\": \"cd388bef-85a9-4c42-9fa0-9beb16fa8563\",\n    \"harga_kamar\": \"100000\",\n    \"pendapatan_bersih\": \"80000\",\n    \"pendapatan_sales\": \"20000\",\n    \"sales_code\": \"weleh\",\n    \"tanggal_check_in\": \"2023-09-10T00:00:00.000Z\",\n    \"tanggal_check_out\": \"2023-09-11T00:00:00.000Z\",\n    \"created_at\": \"2023-09-08T07:46:13.390Z\",\n    \"updated_at\": null,\n    \"deleted_at\": null,\n    \"created_by\": null,\n    \"updated_by\": null,\n    \"deleted_by\": null\n}"
+						},
+						{
+							"name": "Sales Code Already in Use",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"user_id\": \"71c5284f-1ebb-4209-ac6b-74f24d7b7acf\",\r\n    \"kamar_id\": \"cd388bef-85a9-4c42-9fa0-9beb16fa8563\",\r\n    \"sales_code\": \"weleh\",\r\n    \"tanggal_check_in\": \"2023-09-10\",\r\n    \"tanggal_check_out\": \"2023-09-11\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_5000}}/booking",
+									"host": [
+										"{{URL_5000}}"
+									],
+									"path": [
+										"booking"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "DELETE, PUT, GET, POST, PATCH"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Origin, X-Requested-With, Content-Type, Accept"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "37"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"25-BUoi9yvDCT6by1dQxsfDKbe4kyY\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 Sep 2023 07:46:39 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Sales code already in use\"\n}"
+						},
+						{
+							"name": "Create Booking 3 Days",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"user_id\": \"71c5284f-1ebb-4209-ac6b-74f24d7b7acf\",\r\n    \"kamar_id\": \"cd388bef-85a9-4c42-9fa0-9beb16fa8563\",\r\n    \"sales_code\": \"exist\",\r\n    \"tanggal_check_in\": \"2023-09-10\",\r\n    \"tanggal_check_out\": \"2023-09-13\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_5000}}/booking",
+									"host": [
+										"{{URL_5000}}"
+									],
+									"path": [
+										"booking"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "DELETE, PUT, GET, POST, PATCH"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Origin, X-Requested-With, Content-Type, Accept"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "467"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1d3-2M8fld5Umj2KG89SPc0n1iGhdss\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 Sep 2023 07:52:07 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"7ee05806-b040-4ad4-8926-1af17725adc7\",\n    \"user_id\": \"71c5284f-1ebb-4209-ac6b-74f24d7b7acf\",\n    \"kamar_id\": \"cd388bef-85a9-4c42-9fa0-9beb16fa8563\",\n    \"harga_kamar\": \"300000\",\n    \"pendapatan_bersih\": \"240000\",\n    \"pendapatan_sales\": \"60000\",\n    \"sales_code\": \"exist\",\n    \"tanggal_check_in\": \"2023-09-10T00:00:00.000Z\",\n    \"tanggal_check_out\": \"2023-09-13T00:00:00.000Z\",\n    \"created_at\": \"2023-09-08T07:52:07.269Z\",\n    \"updated_at\": null,\n    \"deleted_at\": null,\n    \"created_by\": null,\n    \"updated_by\": null,\n    \"deleted_by\": null\n}"
+						},
+						{
+							"name": "Sales Code Used in Booking",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"user_id\": \"71c5284f-1ebb-4209-ac6b-74f24d7b7acf\",\r\n    \"kamar_id\": \"cd388bef-85a9-4c42-9fa0-9beb16fa8563\",\r\n    \"sales_code\": \"weleh\",\r\n    \"tanggal_check_in\": \"2023-09-10\",\r\n    \"tanggal_check_out\": \"2023-09-13\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_5000}}/booking",
+									"host": [
+										"{{URL_5000}}"
+									],
+									"path": [
+										"booking"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "DELETE, PUT, GET, POST, PATCH"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Origin, X-Requested-With, Content-Type, Accept"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "48"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"30-K7grHLYUfPxdNIRus63YYkBWLjg\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 Sep 2023 08:01:16 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Sales code already used in a booking\"\n}"
+						}
+					]
+				},
+				{
+					"name": "View All Booking",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": [
+						{
+							"name": "View All Booking",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL_5000}}/booking",
+									"host": [
+										"{{URL_5000}}"
+									],
+									"path": [
+										"booking"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "DELETE, PUT, GET, POST, PATCH"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Origin, X-Requested-With, Content-Type, Accept"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1402"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"57a-9uTcqNXjDRKnizx1QltMarT3mzM\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 Sep 2023 08:53:19 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": \"13b3e446-5cc1-4a39-bbd1-96d96a269ec9\",\n        \"user_id\": \"71c5284f-1ebb-4209-ac6b-74f24d7b7acf\",\n        \"kamar_id\": \"cd388bef-85a9-4c42-9fa0-9beb16fa8563\",\n        \"harga_kamar\": \"100000\",\n        \"pendapatan_bersih\": \"80000\",\n        \"pendapatan_sales\": \"20000\",\n        \"sales_code\": \"weleh\",\n        \"tanggal_check_in\": \"2023-09-10T00:00:00.000Z\",\n        \"tanggal_check_out\": \"2023-09-11T00:00:00.000Z\",\n        \"created_at\": \"2023-09-08T07:46:13.390Z\",\n        \"updated_at\": null,\n        \"deleted_at\": null,\n        \"created_by\": null,\n        \"updated_by\": null,\n        \"deleted_by\": null\n    },\n    {\n        \"id\": \"7ee05806-b040-4ad4-8926-1af17725adc7\",\n        \"user_id\": \"71c5284f-1ebb-4209-ac6b-74f24d7b7acf\",\n        \"kamar_id\": \"cd388bef-85a9-4c42-9fa0-9beb16fa8563\",\n        \"harga_kamar\": \"300000\",\n        \"pendapatan_bersih\": \"240000\",\n        \"pendapatan_sales\": \"60000\",\n        \"sales_code\": \"exist\",\n        \"tanggal_check_in\": \"2023-09-10T00:00:00.000Z\",\n        \"tanggal_check_out\": \"2023-09-13T00:00:00.000Z\",\n        \"created_at\": \"2023-09-08T07:52:07.269Z\",\n        \"updated_at\": null,\n        \"deleted_at\": null,\n        \"created_by\": null,\n        \"updated_by\": null,\n        \"deleted_by\": null\n    },\n    {\n        \"id\": \"7bb48b6e-81ee-4dc0-bdc3-02f0a13d661f\",\n        \"user_id\": \"71c5284f-1ebb-4209-ac6b-74f24d7b7acf\",\n        \"kamar_id\": \"cd388bef-85a9-4c42-9fa0-9beb16fa8563\",\n        \"harga_kamar\": \"100000\",\n        \"pendapatan_bersih\": \"80000\",\n        \"pendapatan_sales\": \"20000\",\n        \"sales_code\": \"cool\",\n        \"tanggal_check_in\": \"2023-09-10T00:00:00.000Z\",\n        \"tanggal_check_out\": \"2023-09-11T00:00:00.000Z\",\n        \"created_at\": \"2023-09-08T08:02:47.631Z\",\n        \"updated_at\": null,\n        \"deleted_at\": null,\n        \"created_by\": null,\n        \"updated_by\": null,\n        \"deleted_by\": null\n    }\n]"
+						}
+					]
+				}
+			]
+		}
+	]
+}
