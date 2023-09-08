@@ -1,396 +1,182 @@
-const moment = require("moment-timezone");
-const current_date = moment.tz(new Date(), "Asia/Jakarta").toDate();
-const twilio = require("twilio");
-const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const authToken = process.env.TWILIO_AUTH_TOKEN;
-const client = twilio(accountSid, authToken);
+const { Booking, User, hotel_kamar, Sales } = require("../models");
 
 const BookingController = {
-  create: async function (req, res) {
-    const {
-      fullname,
-      layanan,
-      email,
-      permintaan_special,
-      latitude,
-      longitude,
-      phone,
-      booking_date,
-      alamat,
-      provinsi,
-      kota,
-      kecamatan,
-      kelurahan,
-      postalCode,
-    } = req.body;
-
-    // Start a session
-    const session = await models.BookingDB.startSession();
-    session.startTransaction();
-
-    if (!userHelper.validateEmail(email)) {
-      return res.status(400).json({ error: "Invalid email address" });
-    }
-
-    // Validate latitude and longitude
-    if (!latitude || !longitude) {
-      return res.status(400).json({
-        status: 400,
-        success: false,
-        message: "Please turn on Your GPS Web Browser and Refresh The Page",
-      });
-    }
-
+  add: async function (req, res) {
     try {
-      const options = { session };
-      // Create the new `Category` document
-      const booking = new models.BookingDB({
-        bookingId: await userHelper.generateBookingId(),
-        fullname,
-        layanan,
-        email,
-        permintaan_special,
-        latitude,
-        longitude,
-        phone,
-        booking_date,
-        alamat,
-        provinsi,
-        kota,
-        kecamatan,
-        kelurahan,
-        postalCode,
+      const {
+        user_id,
+        kamar_id,
+        sales_code,
+        tanggal_check_in,
+        tanggal_check_out,
+      } = req.body;
+
+      // Rule 1: Cek apakah user exist
+      const existingUser = await User.findOne({
+        where: { id: user_id },
+        deleted_by: null,
+        deleted_at: null,
       });
 
-      // Send WhatsApp notification with request body
-      const sendWhatsAppNotification = async () => {
-        const message = `
-          New Booking Received:
-          Booking ID: ${booking.bookingId}
-          Fullname: ${fullname}
-          Email: ${email}
-          Phone: ${phone}
-          Layanan: ${layanan}
-          Permintaan Special: ${permintaan_special || "None"}
-          Latitude: ${latitude}
-          Longitude: ${longitude}
-          Booking Date: ${booking_date}
-          Alamat: ${alamat},
-          Provinsi: ${provinsi},
-          Kota: ${kota},
-          Kecamatan: ${kecamatan},
-          Kelurahan: ${kelurahan},
-          Kode Pos: ${postalCode},
-          Created Date: ${booking.created_at}
-  `;
-
-        try {
-          const response = await client.messages.create({
-            body: message,
-            from: `whatsapp:${process.env.TWILIO_PHONE_NUMBER}`,
-            to: `whatsapp:${process.env.YOUR_PHONE_NUMBER}`,
-          });
-          console.log("WhatsApp notification sent:", response.sid);
-        } catch (error) {
-          console.error("Error sending WhatsApp notification:", error);
-        }
-      };
-
-      // Call the function to send WhatsApp notification
-      sendWhatsAppNotification();
-
-      // create reusable transporter object using the configuration
-      let transporter = nodemailer.createTransport({
-        host: process.env.EMAIL_HOST,
-        port: process.env.EMAIL_PORT,
-        secure: false,
-        requireTLS: true,
-        auth: {
-          user: process.env.GMAIL,
-          pass: process.env.SMTP_GMAIL,
-        },
-      });
-
-      // Send a thank-you email to the customer
-      const customerMailOptions = {
-        from: process.env.GMAIL,
-        to: email,
-        subject: `Thank you for booking our service!`,
-        html: `
-      <p>Dear ${fullname},</p>
-      <p>Thank you for booking our service. We look forward to providing you with a great experience!</p>
-      <p>Here are the details of your booking:</p>
-      <ul>
-        <li>Booking ID: ${booking.bookingId}</li>
-      </ul>
-    `,
-      };
-
-      transporter.sendMail(customerMailOptions, function (error, info) {
-        if (error) {
-          console.log(error);
-        } else {
-          console.log(`Email sent to customer: ${info.response}`);
-        }
-      });
-
-      // Send an email to the company with the booking details
-      const companyMailOptions = {
-        from: process.env.GMAIL,
-        to: process.env.GMAIL,
-        subject: `New Booking: ${email}`,
-        html: `
-      <p>Here are the details of the new booking:</p>
-      <ul>
-        <li>Booking ID: ${booking.bookingId}</li>
-        <li>Booking Date: ${booking.booking_date}</li>
-        <li>Fullname: ${fullname}</li>
-        <li>Customer Email: ${email}</li>
-        <li>Customer Phone Number: ${phone}</li>
-        <li>Service: ${layanan}</li>
-        <li>Special Requests: ${permintaan_special || "None"}</li>
-        <li>Location: (${latitude}, ${longitude})</li>
-        <li>Alamat: ${alamat}</li>
-        <li>Provinsi: ${provinsi}</li>
-        <li>Kota: ${kota}</li>
-        <li>Kecamatan: ${kecamatan}</li>
-        <li>Kelurahan: ${kelurahan}</li>
-        <li>Kode Pos: ${postalCode}</li>
-      </ul>
-    `,
-      };
-
-      transporter.sendMail(companyMailOptions, function (error, info) {
-        if (error) {
-          console.log(error);
-        } else {
-          console.log(`Email sent to company: ${info.response}`);
-        }
-      });
-
-      // Save the new category with session
-      await booking.save(options);
-      await session.commitTransaction();
-      session.endSession();
-      return response.ok(true, res, `Success`);
-    } catch (err) {
-      await session.abortTransaction();
-      session.endSession();
-      return response.error(400, err.message, res, err);
-    }
-  },
-
-  update: async function (req, res) {
-    const { booking_id, is_active, keterangan } = req.body;
-
-    try {
-      // Start a session
-
-      session = await models.BookingDB.startSession();
-      session.startTransaction();
-
-      const options = { session };
-
-      // Find the `Booking` document to update
-      const booking = await models.BookingDB.findOne({
-        _id: booking_id,
-        deleted_time: { $exists: false },
-        deleted_by: { $exists: false },
-      });
-
-      if (!booking) {
-        return response.error(
-          404,
-          "Booking is not found or already deleted",
-          res
-        );
+      if (!existingUser) {
+        return res.status(400).json({ error: "User does not exist" });
       }
 
-      // Update the Booking Fields
-      booking.is_active = is_active;
-      booking.keterangan = keterangan;
-      // booking.updated_by = req.user._id;
-      booking.updated_at = current_date;
-
-      // create reusable transporter object using the configuration
-      let transporter = nodemailer.createTransport({
-        host: process.env.EMAIL_HOST,
-        port: process.env.EMAIL_PORT,
-        secure: false,
-        requireTLS: true,
-        auth: {
-          user: process.env.GMAIL,
-          pass: process.env.SMTP_GMAIL,
-        },
+      // Rule 2: Apakah Sales Code Exist
+      const salesRecord = await Sales.findOne({
+        where: { coupon: sales_code },
       });
 
-      // Send an email to the company with the booking details
-      const companyMailOptions = {
-        from: process.env.GMAIL,
-        to: process.env.GMAIL,
-        subject: `Update Booking with E-mail: ${booking.email}`,
-        html: `
-      <p>Here are the details of the updated booking:</p>
-      <ul>
-        <li>Booking ID: ${booking.bookingId}</li>
-        <li>Status Booking: ${booking.is_active}</li>
-        <li>Customer Name: ${booking.fullname}</li>
-        <li>Service: ${booking.layanan}</li>
-        <li>Special requests: ${booking.permintaan_special || "None"}</li>
-        <li>Location: (${booking.latitude}, ${booking.longitude})</li>
-        <li>Customer email: ${booking.email}</li>
-        <li>Customer phone number: ${booking.phone}</li>
-      </ul>
-    `,
-      };
+      if (!salesRecord) {
+        return res.status(400).json({ error: "Invalid sales code" });
+      }
 
-      transporter.sendMail(companyMailOptions, function (error, info) {
-        if (error) {
-          console.log(error);
-        } else {
-          console.log(`Email sent to company: ${info.response}`);
-        }
+      // Rule 3: Validasi Apakah kamar_id exist
+      const roomRecord = await hotel_kamar.findByPk(kamar_id);
+
+      if (!roomRecord) {
+        return res.status(400).json({ error: "Invalid kamar_id" });
+      }
+
+      // Rule 4: Cek Apakah tanggal_check_out is higher than tanggal_check_in
+      const checkInDate = new Date(tanggal_check_in);
+      const checkOutDate = new Date(tanggal_check_out);
+
+      if (checkOutDate <= checkInDate) {
+        return res.status(400).json({ error: "Invalid tanggal_check_out" });
+      }
+
+      // Kalkulasi harga_kamar based on the number of days
+      const daysBetween = (checkOutDate - checkInDate) / (1000 * 60 * 60 * 24);
+      const harga_kamar = roomRecord.harga * daysBetween;
+
+      // Rule 4: Kalkulasi pendapatan_bersih and pendapatan_sales
+      const pendapatan_bersih = 0.8 * harga_kamar;
+      const pendapatan_sales = 0.2 * harga_kamar;
+
+      // Rule 5: Cek apakah saldo user cukup untuk melakukan booking
+      if (existingUser.saldo < harga_kamar) {
+        return res.status(400).json({ error: "Insufficient saldo" });
+      }
+
+      // Mengurangi the harga_kamar dari saldo user
+      const updatedSaldo = existingUser.saldo - harga_kamar;
+
+      // User tidak boleh menggunakan sales code yang sama dengan sebelumnya, lalu update saldo user dll
+      if (existingUser.sales_code !== sales_code) {
+        await User.update(
+          { saldo: updatedSaldo, sales_code: sales_code },
+          { where: { id: user_id } }
+        );
+      } else {
+        return res.status(400).json({ error: "Sales code already in use" });
+      }
+
+      // Cek apakah the sales_code exist in Booking DB
+      const existingBooking = await Booking.findOne({
+        where: { sales_code: sales_code },
       });
 
-      // Save the updated document
-      await booking.save(options);
+      if (existingBooking) {
+        return res
+          .status(400)
+          .json({ error: "Sales code already used in a booking" });
+      }
 
-      await session.commitTransaction();
-      session.endSession();
-      return response.ok(true, res, `Success`);
-    } catch (err) {
-      session.abortTransaction();
-      session.endSession();
-      return response.error(500, err.message, res);
+      // Create a new booking
+      const newBooking = await Booking.create({
+        user_id,
+        kamar_id,
+        harga_kamar,
+        pendapatan_bersih,
+        pendapatan_sales,
+        sales_code,
+        tanggal_check_in,
+        tanggal_check_out,
+        created_at: new Date(),
+      });
+
+      // Update the Sales DB with commissions yang tersedia
+      salesRecord.total_commission += harga_kamar;
+      salesRecord.owner_commission += pendapatan_bersih;
+      salesRecord.sales_commission += pendapatan_sales;
+      await salesRecord.save();
+
+      res.status(201).json(newBooking);
+    } catch (error) {
+      console.error(error);
+      res
+        .status(500)
+        .json({ error: "An error occurred while adding the booking." });
     }
   },
 
   delete: async function (req, res) {
-    const { booking_id } = req.body;
-
     try {
-      // Start a session
-      const session = await models.BookingDB.startSession();
-      session.startTransaction();
+      const { id } = req.body;
 
-      // Create the options object with the session property
-      const options = { session };
-
-      // Find the `Product` document to delete and update it
-      const booking = await models.BookingDB.findOne({
-        _id: booking_id,
-        deleted_time: { $exists: false },
-        deleted_by: { $exists: false },
+      const booking = await Booking.findOne({
+        where: {
+          id,
+          deleted_at: null,
+        },
       });
 
-      // Validate if the user is authorized to delete the live comment
       if (!booking) {
-        return response.error(
-          404,
-          `Comment is not found or already deleted`,
-          res
-        );
+        return res.status(404).json({ error: "Booking is not found" });
       }
 
-      // Delete Live Comment
-      await models.BookingDB.findByIdAndUpdate(
-        { _id: booking_id },
-        {
-          $set: {
-            // deleted_by: req.user._id,
-            deleted_time: current_date,
-          },
-        },
-        { new: true, ...options }
-      );
+      await booking.update({
+        deleted_at: new Date(),
+      });
 
-      await session.commitTransaction();
-      session.endSession();
-      return response.ok(true, res, `Success`);
-    } catch (err) {
-      // session variable should be defined
-      session.abortTransaction();
-      session.endSession();
-      return response.error(400, err.message, res, err);
+      res.status(200).json({ message: "Booking soft-deleted successfully" });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({
+        error: "An error occurred while soft-deleting the Booking",
+      });
     }
   },
 
   get: async function (req, res) {
     try {
-      const booking = await models.BookingDB.find({
-        deleted_time: { $exists: false },
-        deleted_by: { $exists: false },
+      // Query the database to fetch all users
+      const booking = await Booking.findAll({
+        where: { deleted_at: null },
       });
-      return response.ok(booking, res, "Success");
-    } catch (err) {
-      return response.error(400, err.message, res, err);
+
+      // Return the list of users as a JSON response
+      res.status(200).json(booking);
+    } catch (error) {
+      console.error(error);
+      res
+        .status(500)
+        .json({ error: "An error occurred while fetching booking" });
     }
   },
 
-  searchIdBooking: async function (req, res) {
+  detail: async function (req, res) {
     try {
-      const id = req.query.id;
-      const booking = await models.BookingDB.findOne({
-        bookingId: id,
-      });
-      if (!booking) return response.error(404, `Booking ID Not Found`, res);
-      return response.ok(booking, res, `Success`);
-    } catch (error) {
-      return response.error(400, error.message, res, error);
-    }
-  },
+      const { id } = req.params;
 
-  searchEmail: async function (req, res) {
-    try {
-      const email = req.query.email;
-      const booking = await models.BookingDB.findOne({
-        email: email,
+      const sales = await Sales.findOne({
+        where: { id },
+        // attributes: { exclude: ["no_hp"] },
       });
-      if (!booking) return response.error(404, `Booking Email Not Found`, res);
-      return response.ok(booking, res, `Success`);
-    } catch (error) {
-      return response.error(400, error.message, res, error);
-    }
-  },
 
-  searchPhone: async function (req, res) {
-    try {
-      const phone = req.query.phone;
-      const booking = await models.BookingDB.findOne({
-        phone: phone,
-      });
-      if (!booking) return response.error(404, `Booking Phone Not Found`, res);
-      return response.ok(booking, res, `Success`);
-    } catch (error) {
-      return response.error(400, error.message, res, error);
-    }
-  },
+      // If the user doesn't exist, return a 404 error
+      if (!sales) {
+        return res.status(404).json({ error: "Sales not found" });
+      }
 
-  searchService: async function (req, res) {
-    try {
-      const service = req.query.service;
-      const booking = await models.BookingDB.findOne({
-        slug_layanan: service,
-      });
-      if (!booking)
-        return response.error(404, `Booking Service Not Found`, res);
-      return response.ok(booking, res, `Success`);
+      // Return the user as a JSON response
+      res.status(200).json(sales);
     } catch (error) {
-      return response.error(400, error.message, res, error);
-    }
-  },
-
-  searchFullname: async function (req, res) {
-    try {
-      const fullname = req.query.fullname;
-      const booking = await models.BookingDB.findOne({
-        slug_fullname: fullname,
-      });
-      if (!booking)
-        return response.error(404, `Booking Fullname Not Found`, res);
-      return response.ok(booking, res, `Success`);
-    } catch (error) {
-      return response.error(400, error.message, res, error);
+      console.error(error);
+      res
+        .status(500)
+        .json({ error: "An error occurred while fetching the Sales" });
     }
   },
 };

@@ -1,14 +1,9 @@
 const express = require("express");
 const app = express();
 const globalErrHandler = require("./middleware/globalErrHandler");
-const mongoose = require("mongoose");
-const multer = require("multer");
-const path = require("path");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const fs = require("fs");
-const helmet = require("helmet");
-const cloudinary = require("cloudinary").v2;
+const { sequelize } = require("./models");
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -38,73 +33,23 @@ app.use(function (req, res, next) {
 });
 
 // Routes:
-const bookingRouter = require("./routes/Booking");
 const userRouter = require("./routes/User");
-const contactUsRouter = require("./routes/ContactUs");
-const bulkEmailRouter = require("./routes/BulkEmail");
-const addressRouter = require("./routes/Address");
-const newsletterRouter = require("./routes/Newsletter");
-const careerRouter = require("./routes/Career");
-const applicantRouter = require("./routes/Applicant");
-const testimonialRouter = require("./routes/Testimonial");
-const promoRouter = require("./routes/Promo");
-const acRouter = require("./routes/GalleryAc");
-const mesinRouter = require("./routes/GalleryMesin");
-const listrikRouter = require("./routes/GalleryListrik");
-const sipilRouter = require("./routes/GallerySipil");
-const plumbingRouter = require("./routes/GalleryPlumbing");
-const homeRouter = require("./routes/GalleryHome");
+const hotelRouter = require("./routes/Hotel");
+const kamarRouter = require("./routes/Kamar");
+const salesRouter = require("./routes/Sales");
+const bookingRouter = require("./routes/Booking");
 
 // Routes:
-app.use("/api/v1/newsletter", newsletterRouter);
-app.use("/api/v1/booking", bookingRouter);
 app.use("/api/v1/users", userRouter);
-app.use("/api/v1/contact-us", contactUsRouter);
-app.use("/api/v1/bulkemail", bulkEmailRouter);
-app.use("/api/v1/address", addressRouter);
-app.use("/api/v1/career", careerRouter);
-app.use("/api/v1/applicant", applicantRouter);
-app.use("/api/v1/testimonial", testimonialRouter);
-app.use("/api/v1/promo", promoRouter);
-app.use("/api/v1/gallery-ac", acRouter);
-app.use("/api/v1/gallery-mesin", mesinRouter);
-app.use("/api/v1/gallery-listrik", listrikRouter);
-app.use("/api/v1/gallery-sipil", sipilRouter);
-app.use("/api/v1/gallery-plumbing", plumbingRouter);
-app.use("/api/v1/gallery-home", homeRouter);
-
-// Setting Path:
-app.use("/images", express.static(path.join(__dirname, "./images")));
-
-// Database Connection:
-try {
-  mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true }); //tidak deprecated
-  const db = mongoose.connection;
-  db.on("error", console.error.bind(console, "connection error")); //tanya
-  db.once("open", function (callback) {
-    console.log("\n\n\n\n");
-    console.log(
-      `Server successfully compiled on ${moment().format(
-        `YYYY-MM-DD HH:mm:ss`
-      )} \nDatabase connection Success with port ${
-        process.env.PORT
-      }!\nConnect to MongDB Atlas\n\n\n\n\n`
-    );
-  });
-} catch (error) {
-  atlas();
-}
-
-/*** CRON SCHEDULER ***/
-const cron = require("../api/cron/index");
+app.use("/api/v1/hotel", hotelRouter);
+app.use("/api/v1/kamar", kamarRouter);
+app.use("/api/v1/sales", salesRouter);
+app.use("/api/v1/booking", bookingRouter);
 
 // Define a simple route handler to indicate that the server is running
 app.use("/test", (req, res) => {
   res.send("Server is running");
 });
-
-// Mount bulk email router
-app.use("/api/v1/bulkemail", bulkEmailRouter);
 
 //Error handlers middleware
 app.use(globalErrHandler);
@@ -120,4 +65,12 @@ app.use("*", (req, res) => {
 //Listen to server
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, console.log(`Server is up and running on ${PORT}`));
+// Start the server after establishing the database connection
+sequelize
+  .sync() // Sync all defined models with the database
+  .then(() => {
+    app.listen(PORT, console.log(`Server is up and running on ${PORT}`));
+  })
+  .catch((err) => {
+    console.error("Database synchronization error:", err);
+  });

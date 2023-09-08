@@ -1,74 +1,69 @@
-const defaultDate = moment().tz("Asia/Jakarta").format();
+"use strict";
+const { Model } = require("sequelize");
+const { v4: uuidv4 } = require("uuid"); // Import the v4 function from uuid
 
-const UserSchema = new mongoose.Schema({
-  fullname: {
-    type: String,
-    required: true,
-  },
+module.exports = (sequelize, DataTypes) => {
+  class User extends Model {
+    static associate(models) {
+      // define association here
 
-  username: {
-    type: String,
-    unique: true,
-    required: true,
-  },
+      User.hasMany(models.Booking, { foreignKey: "user_id" });
+    }
+    // Hide ID:
+    // toJSON() {
+    //   return { ...this.get(), id: undefined };
+    // }
+  }
 
-  role: {
-    type: String,
-    enum: ["Master", "Manager", "Admin"],
-  },
+  User.init(
+    {
+      id: {
+        allowNull: false,
+        unique: true,
+        primaryKey: true,
+        type: DataTypes.STRING,
+        defaultValue: () => uuidv4(),
+      },
+      nama: DataTypes.STRING,
+      no_hp: {
+        type: DataTypes.STRING,
+        unique: true,
+      },
+      alamat: DataTypes.STRING,
+      sales_code: DataTypes.STRING,
+      saldo: DataTypes.NUMERIC,
+      created_at: {
+        allowNull: false,
+        type: DataTypes.DATE,
+      },
+      updated_at: {
+        type: DataTypes.DATE,
+      },
+      deleted_at: {
+        type: DataTypes.DATE,
+      },
+      updated_by: {
+        type: DataTypes.STRING, // Match the data type of the User's id
+        references: {
+          model: "user", // Reference the 'User' model
+          key: "id", // Reference the 'id' column
+        },
+      },
+      deleted_by: {
+        type: DataTypes.STRING, // Match the data type of the User's id
+        references: {
+          model: "user", // Reference the 'User' model
+          key: "id", // Reference the 'id' column
+        },
+      },
+    },
+    {
+      sequelize,
+      modelName: "User",
+      tableName: "user", // Set the table name to match your migration
+      timestamps: false, // Disable timestamps as they are handled in the columns
+    }
+  );
 
-  email: {
-    type: String,
-    unique: true,
-    required: true,
-  },
-
-  password: {
-    type: String,
-  },
-
-  slug: {
-    type: String,
-  },
-
-  img_profile: {
-    type: String,
-    default: null,
-  },
-
-  /* CONFIG */
-  created_at: {
-    type: Date,
-    default: defaultDate,
-  },
-
-  updated_at: {
-    type: Date,
-  },
-
-  created_by: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "user",
-  },
-
-  updated_by: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "user",
-  },
-
-  deleted_time: Date,
-
-  deleted_by: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "user",
-  },
-});
-
-UserSchema.pre("save", function (next) {
-  this.slug = slugify(this.fullname, { lower: true });
-  next();
-});
-
-const UserDB = mongoose.model("user", UserSchema, "user");
-
-module.exports = UserDB;
+  return User;
+};

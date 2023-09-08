@@ -1,116 +1,69 @@
-const defaultDate = moment().tz("Asia/Jakarta").format();
+"use strict";
+const { Model } = require("sequelize");
+const { v4: uuidv4 } = require("uuid"); // Import the v4 function from uuid
 
-const BookingSchema = new mongoose.Schema({
-  bookingId: {
-    type: String,
-  },
+module.exports = (sequelize, DataTypes) => {
+  class Booking extends Model {
+    static associate(models) {
+      // Define association here
+      Booking.belongsTo(models.User, { foreignKey: "user_id" });
+      Booking.belongsTo(models.hotel_kamar, { foreignKey: "kamar_id" });
+    }
+  }
 
-  fullname: {
-    type: String,
-  },
+  Booking.init(
+    {
+      id: {
+        allowNull: false,
+        unique: true,
+        primaryKey: true,
+        type: DataTypes.STRING,
+        defaultValue: () => uuidv4(),
+      },
+      user_id: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      kamar_id: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      harga_kamar: {
+        type: DataTypes.NUMERIC,
+        allowNull: false,
+      },
+      pendapatan_bersih: DataTypes.NUMERIC,
+      pendapatan_sales: DataTypes.NUMERIC,
+      sales_code: DataTypes.STRING,
+      tanggal_check_in: DataTypes.DATE,
+      tanggal_check_out: DataTypes.DATE,
+      created_at: {
+        allowNull: false,
+        type: DataTypes.DATE,
+      },
+      updated_at: {
+        type: DataTypes.DATE,
+      },
+      deleted_at: {
+        type: DataTypes.DATE,
+      },
+      created_by: {
+        type: DataTypes.STRING,
+      },
+      updated_by: {
+        type: DataTypes.STRING,
+      },
+      deleted_by: {
+        type: DataTypes.STRING,
+      },
+    },
+    {
+      sequelize,
+      modelName: "Booking",
+      tableName: "booking", // Set the table name to match your migration
+      timestamps: false, // Disable timestamps as they are handled in the columns
+    }
+  );
 
-  alamat: {
-    type: String,
-  },
-
-  provinsi: {
-    type: String,
-  },
-
-  kota: {
-    type: String,
-  },
-
-  kecamatan: {
-    type: String,
-  },
-
-  kelurahan: {
-    type: String,
-  },
-
-  postalCode: {
-    type: String,
-  },
-
-  layanan: {
-    type: String,
-  },
-
-  email: {
-    type: String,
-  },
-
-  permintaan_special: {
-    type: String,
-  },
-
-  latitude: {
-    type: String,
-  },
-
-  longitude: {
-    type: String,
-  },
-
-  phone: {
-    type: String,
-  },
-
-  keterangan: {
-    type: String,
-  },
-
-  booking_date: {
-    type: Date,
-  },
-
-  slug_layanan: {
-    type: String,
-  },
-
-  slug_fullname: {
-    type: String,
-  },
-
-  is_active: {
-    type: Boolean,
-    default: false,
-  },
-
-  /* CONFIG */
-  created_at: {
-    type: Date,
-    default: defaultDate,
-  },
-
-  updated_at: {
-    type: Date,
-  },
-
-  updated_by: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "user",
-  },
-
-  deleted_time: Date,
-
-  deleted_by: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "user",
-  },
-});
-
-BookingSchema.pre("save", function (next) {
-  this.slug_layanan = slugify(this.layanan, { lower: true });
-  next();
-});
-
-BookingSchema.pre("save", function (next) {
-  this.slug_fullname = slugify(this.fullname, { lower: true });
-  next();
-});
-
-const BookingDB = mongoose.model("booking", BookingSchema, "booking");
-
-module.exports = BookingDB;
+  return Booking;
+};
