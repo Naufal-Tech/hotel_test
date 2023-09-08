@@ -141,12 +141,10 @@ const BookingController = {
 
   get: async function (req, res) {
     try {
-      // Query the database to fetch all users
       const booking = await Booking.findAll({
         where: { deleted_at: null },
       });
 
-      // Return the list of users as a JSON response
       res.status(200).json(booking);
     } catch (error) {
       console.error(error);
@@ -160,23 +158,21 @@ const BookingController = {
     try {
       const { id } = req.params;
 
-      const sales = await Sales.findOne({
+      const booking = await Booking.findOne({
         where: { id },
-        // attributes: { exclude: ["no_hp"] },
       });
 
-      // If the user doesn't exist, return a 404 error
-      if (!sales) {
-        return res.status(404).json({ error: "Sales not found" });
+      if (!booking) {
+        return res.status(404).json({ error: "Booking not found" });
       }
 
       // Return the user as a JSON response
-      res.status(200).json(sales);
+      res.status(200).json(booking);
     } catch (error) {
       console.error(error);
       res
         .status(500)
-        .json({ error: "An error occurred while fetching the Sales" });
+        .json({ error: "An error occurred while fetching the Booking" });
     }
   },
 };
