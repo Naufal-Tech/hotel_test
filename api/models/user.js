@@ -31,6 +31,13 @@ module.exports = (sequelize, DataTypes) => {
       alamat: DataTypes.STRING,
       sales_code: DataTypes.STRING,
       saldo: DataTypes.NUMERIC,
+      user_commission: DataTypes.NUMERIC,
+      owner_commission: DataTypes.NUMERIC,
+      total_commission: DataTypes.NUMERIC,
+      status: {
+        type: DataTypes.STRING,
+        defaultValue: "user",
+      },
       created_at: {
         allowNull: false,
         type: DataTypes.DATE,

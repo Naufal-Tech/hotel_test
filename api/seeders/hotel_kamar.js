@@ -9,7 +9,7 @@ module.exports = {
     const hotelRooms = [
       {
         id: uuidv4(),
-        hotel_id: "5da86d57-ba6f-4f9f-b476-e5a927641853", // Reference to an existing hotel's ID
+        hotel_id: "49ae802d-4aa7-47b0-b57e-8b99f2ed9e25", // Reference to an existing hotel's ID
         name_kamar: "Room A",
         nomor_kamar: 101,
         harga: 1000,
@@ -18,7 +18,7 @@ module.exports = {
       },
       {
         id: uuidv4(),
-        hotel_id: "ab623d3c-72b1-4078-a59e-d37af7b6e701", // Reference to an existing hotel's ID
+        hotel_id: "78446b90-1fc9-4e44-8904-a3c65e550260", // Reference to an existing hotel's ID
         name_kamar: "Room B",
         nomor_kamar: 102,
         harga: 10000,
@@ -27,7 +27,7 @@ module.exports = {
       },
       {
         id: uuidv4(),
-        hotel_id: "d586373c-1e48-4eba-8a96-f60071402d21", // Reference to an existing hotel's ID
+        hotel_id: "b287586b-dc9e-420b-8498-655aa396b951", // Reference to an existing hotel's ID
         name_kamar: "Room C",
         nomor_kamar: 103,
         harga: 100000,

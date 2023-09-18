@@ -23,8 +23,8 @@ const BookingController = {
       // Rule 2: Apakah Sales Code Exist (process only if sales_code is provided)
       let salesRecord;
       if (sales_code) {
-        salesRecord = await Sales.findOne({
-          where: { coupon: sales_code, deleted_at: null },
+        salesRecord = await User.findOne({
+          where: { sales_code: sales_code, deleted_at: null },
         });
 
         if (!salesRecord) {
@@ -67,24 +67,40 @@ const BookingController = {
       // User tidak boleh menggunakan sales code yang sama dengan sebelumnya, lalu update saldo user dll
       if (sales_code && existingUser.sales_code !== sales_code) {
         // Check if the sales code is already used in a booking
-        const existingBooking = await Booking.findOne({
-          where: { sales_code: sales_code, deleted_at: null, deleted_by: null },
-        });
+        // const existingBooking = await Booking.findOne({
+        //   where: { sales_code: sales_code, deleted_at: null, deleted_by: null },
+        // });
 
-        if (existingBooking) {
-          return res
-            .status(400)
-            .json({ error: "Sales code already used in a booking" });
-        }
+        // if (existingBooking) {
+        //   return res
+        //     .status(400)
+        //     .json({ error: "Sales code already used in a booking" });
+        // }
 
         // If the sales code is not already used, update the user
         await User.update(
-          { saldo: updatedSaldo, sales_code: sales_code },
+          { saldo: updatedSaldo },
           { where: { id: user_id, deleted_by: null, deleted_at: null } }
+        );
+
+        await User.update(
+          { owner_commission: pendapatan_bersih },
+          { where: { status: "owner" } }
+        );
+
+        await User.update(
+          { user_commission: pendapatan_sales, saldo: pendapatan_sales },
+          { where: { sales_code: sales_code, status: "user" } }
         );
       } else if (sales_code) {
         return res.status(400).json({ error: "Sales code already in use" });
       }
+
+      // Update the Sales DB with commissions yang tersedia
+      // if (salesRecord) {
+      //   salesRecord.sales_commission += pendapatan_sales;
+      //   await salesRecord.save();
+      // }
 
       // Create a new booking
       const newBooking = await Booking.create({
@@ -98,14 +114,6 @@ const BookingController = {
         tanggal_check_out,
         created_at: new Date(),
       });
-
-      // Update the Sales DB with commissions yang tersedia
-      if (salesRecord) {
-        salesRecord.total_commission += harga_kamar;
-        salesRecord.owner_commission += pendapatan_bersih;
-        salesRecord.sales_commission += pendapatan_sales;
-        await salesRecord.save();
-      }
 
       response.ok(newBooking, res, "Booking created successfully");
     } catch (error) {

@@ -2,7 +2,7 @@
   "development": {
     "username": "postgres",
     "password": "1234567",
-    "database": "testing_hotel",
+    "database": "hotel_intervew",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },

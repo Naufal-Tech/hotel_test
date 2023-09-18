@@ -27,6 +27,19 @@ module.exports = {
       saldo: {
         type: Sequelize.NUMERIC, // Ensure this field is of the correct data type
       },
+      user_commission: {
+        type: Sequelize.NUMERIC,
+      },
+      owner_commission: {
+        type: Sequelize.NUMERIC,
+      },
+      total_commission: {
+        type: Sequelize.NUMERIC,
+      },
+      status: {
+        type: Sequelize.STRING,
+        defaultValue: "user",
+      },
 
       // CONFIG:
       created_at: {

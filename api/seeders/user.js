@@ -9,6 +9,7 @@ module.exports = {
         nama: "Naufal",
         no_hp: "1234567890",
         alamat: "123 Main St",
+        status: "owner",
         created_at: new Date(),
       },
       {
@@ -16,6 +17,7 @@ module.exports = {
         nama: "We",
         no_hp: "12345",
         alamat: "Jalan Street",
+        status: "user",
         created_at: new Date(),
       },
       {
@@ -23,6 +25,7 @@ module.exports = {
         nama: "Deal",
         no_hp: "67890",
         alamat: "Jalan Jalan",
+        status: "user",
         created_at: new Date(),
       },
       // Tambahakn di sini
