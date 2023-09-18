@@ -1,13 +1,12 @@
 "use strict";
 const { Model } = require("sequelize");
-const { v4: uuidv4 } = require("uuid"); // Import the v4 function from uuid
+const { v4: uuidv4 } = require("uuid");
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
       // define association here
-
-      User.hasMany(models.Booking, { foreignKey: "user_id" });
+      User.hasMany(models.Booking, { foreignKey: "user_id" }); // user id dapat memiliki banyak booking id
     }
     // Hide ID:
     // toJSON() {
@@ -22,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
         primaryKey: true,
         type: DataTypes.STRING,
-        defaultValue: () => uuidv4(),
+        defaultValue: () => uuidv4(), // generate uuid by default
       },
       nama: DataTypes.STRING,
       no_hp: {

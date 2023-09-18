@@ -1,30 +1,30 @@
 const response_data = {
-  send: (values, res) => {
-    res.json(values);
-    res.end();
-  },
+  // Respond with a successful OK response
   ok: (values, res, message, fields) => {
-    let data = {
+    const data = {
       success: true,
       status: 200,
       data: values,
       message,
-      fields,
+      fields, // Include any additional metadata here
     };
-    res.json(data);
-    res.end();
+    res.status(200).json(data);
   },
-  back: (code, values, message, fields) => {
-    let data = {
+
+  // Respond with a custom status code and data
+  custom: (code, values, message, fields, res) => {
+    const data = {
       status: code,
       data: values,
       message,
       fields,
     };
-    return data;
+    res.json(data);
   },
+
+  // Respond with a successful response indicating success with empty data
   success: (res, fields) => {
-    let data = {
+    const data = {
       success: true,
       status: 201,
       data: null,
@@ -32,48 +32,30 @@ const response_data = {
       fields,
     };
     res.json(data);
-    res.end();
   },
-  error: (status, message, res, err, fields) => {
-    let data = {
-      success: false,
-      status,
-      message,
-      err,
-      fields,
-    };
-    res.json(data);
-    res.end();
-  },
-  done: (message, res, token) => {
-    let data = {
-      success: true,
-      status: 200,
-      message: message,
-      token: token,
-    };
-    res.json(data);
-    res.end();
-  },
+
+  // Redirect to a different URL
   redirect: (url, res) => {
     res.redirect(url);
   },
-  unauthorized: (data, res, message) => {
-    return res.status(401).json({
+
+  // Respond with an unauthorized status code and message
+  unauthorized: (res, message, data = null) => {
+    res.status(401).json({
       success: false,
       message: message || "Unauthorized",
-      data: data || null,
+      data,
     });
   },
-  gagal: (status, message, res, err = {}) => {
-    res.status(status).send({ success: false, status, message, err });
+
+  // Respond with a specific status code, message, and optional error
+  customError: (status, message, res, err = {}, data = null) => {
+    res.status(status).json({ success: false, status, message, err, data });
   },
-  badRequest: function (data, res, message) {
-    return res.status(400).json({
-      status: false,
-      message: message,
-      data: data,
-    });
+
+  // Respond with a Bad Request status code and message
+  badRequest: (res, message, data = null) => {
+    res.status(400).json({ success: false, status: 400, message, data });
   },
 };
 

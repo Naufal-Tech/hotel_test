@@ -97,7 +97,7 @@ const SalesController = {
       const { id } = req.params;
 
       const sales = await Sales.findOne({
-        where: { id },
+        where: { id, deleted_at: null },
       });
 
       if (!sales) {

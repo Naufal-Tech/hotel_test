@@ -5,7 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon ./api/index.js"
+    "start": "nodemon ./api/index.js",
+    "db:create": "cd api && sequelize db:create",
+    "db:migrate": "cd api && sequelize db:migrate",
+    "seed-user": "cd api && sequelize db:seed --seed ./seeders/user.js",
+    "seed-hotel": "cd api && sequelize db:seed --seed ./seeders/hotel.js",
+    "seed-sales": "cd api && sequelize db:seed --seed ./seeders/sales.js",
+    "seed-kamar": "cd api && sequelize db:seed --seed ./seeders/kamar_hotel.js"
   },
   "keywords": [],
   "author": "",
@@ -15,11 +21,8 @@
     "axios": "^1.4.0",
     "bcrypt": "^5.1.0",
     "bcryptjs": "^2.4.3",
-    "cloudinary": "^1.36.4",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
-    "crypto": "^1.0.1",
-    "crypto-js": "^4.1.1",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "fs": "^0.0.1-security",
@@ -30,11 +33,7 @@
     "jsonwebtoken": "^9.0.0",
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.43",
-    "mongoose": "^7.1.0",
-    "multer": "^1.4.5-lts.1",
-    "multer-storage-cloudinary": "^4.0.0",
     "node-cron": "^3.0.2",
-    "nodemailer": "^6.9.1",
     "nodemon": "^2.0.22",
     "npm": "^9.6.6",
     "path": "^0.12.7",
@@ -44,7 +43,6 @@
     "sequelize": "^6.32.1",
     "sequelize-cli": "^6.6.1",
     "slugify": "^1.6.6",
-    "twilio": "^4.11.0",
     "uuid": "^9.0.0"
   }
 }

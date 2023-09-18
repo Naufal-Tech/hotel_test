@@ -6,8 +6,8 @@ module.exports = (sequelize, DataTypes) => {
   class Booking extends Model {
     static associate(models) {
       // Define association here
-      Booking.belongsTo(models.User, { foreignKey: "user_id" });
-      Booking.belongsTo(models.hotel_kamar, { foreignKey: "kamar_id" });
+      Booking.belongsTo(models.User, { foreignKey: "user_id" }); // checking user_id apakah exist di database User
+      Booking.belongsTo(models.hotel_kamar, { foreignKey: "kamar_id" }); // checking kamar_id apakah exist di database User
     }
   }
 

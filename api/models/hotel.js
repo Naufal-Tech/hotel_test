@@ -4,7 +4,7 @@ const { v4: uuidv4 } = require("uuid");
 module.exports = (sequelize, DataTypes) => {
   class Hotel extends Model {
     static associate(models) {
-      Hotel.hasMany(models.hotel_kamar, { foreignKey: "hotel_id" });
+      Hotel.hasMany(models.hotel_kamar, { foreignKey: "hotel_id" }); // Hotel bisa memiliki banyak hotel_kamar
     }
   }
 

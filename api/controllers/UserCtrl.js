@@ -204,7 +204,11 @@ const UserController = {
       const userId = req.user.id; // Cek user dari token
 
       const user = await User.findOne({
-        where: { id: userId, deleted_at: null },
+        where: {
+          id: userId,
+          deleted_by: null, // ambil yang null, karena belum didelete
+          deleted_at: null,
+        },
         // attributes: { exclude: ["no_hp"] },
       });
 

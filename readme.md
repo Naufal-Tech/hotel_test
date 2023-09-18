@@ -34,3 +34,10 @@ FOLLOW THESE STEPS:
 8. npm start
 
 ## LINK POSTMAN: https://documenter.getpostman.com/view/20393150/2s9YBz4bG1
+
+# Seeder Flow: cd api
+
+1. Seeder User: sequelize db:seed --seed ./seeders/user.js
+2. Seeder User: sequelize db:seed --seed ./seeders/hotel.js
+3. Seeder User: sequelize db:seed --seed ./seeders/sales.js
+4. Seeder User: sequelize db:seed --seed ./seeders/kamar_hotel.js

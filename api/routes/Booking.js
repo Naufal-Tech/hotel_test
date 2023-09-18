@@ -5,9 +5,6 @@ const bookingRouter = express.Router();
 //POST: /api/v1/booking
 bookingRouter.post("/", Controller.add);
 
-//PATCH: /api/v1/booking/update
-// bookingRouter.patch("/update", Controller.update);
-
 //DELETE: /api/v1/booking/delete
 bookingRouter.delete("/delete", Controller.delete);
 

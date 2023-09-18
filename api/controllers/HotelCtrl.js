@@ -13,7 +13,8 @@ const HotelController = {
         created_at: new Date(),
       });
 
-      res.status(201).json(newHotel);
+      response.ok(newHotel, res, "Hotel added successfully");
+      console.log("response", res);
     } catch (error) {
       console.error(error);
       res

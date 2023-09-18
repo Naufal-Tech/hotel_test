@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const globalErrHandler = require("./middleware/globalErrHandler");
+const { globalErrHandler } = require("./middleware/globalErrHandler");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const { sequelize } = require("./models");
@@ -10,21 +10,22 @@ dotenv.config();
 /*** Global Variable ***/
 require(`./global`)(global);
 
-//middlewares
-app.use(express.json()); //pass incoming payload
+// Middlewares
+app.use(express.json());
 
 // Setting up bodyParser:
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// SETTING CORS:
-app.use(cors());
+// SETTING CORS: Configure Cross-Origin Resource Sharing (CORS)
+app.use(cors()); // Enable CORS for all routes
 app.options("*", cors());
 
+// CORS Headers: Define CORS headers for all routes
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "DELETE, PUT, GET, POST, PATCH");
+  res.header("Access-Control-Allow-Methods", "DELETE, PUT, GET, POST, PATCH"); // Allow specified HTTP methods
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
@@ -32,14 +33,14 @@ app.use(function (req, res, next) {
   next();
 });
 
-// Routes:
+// Routes: Import and use various route modules
 const userRouter = require("./routes/User");
 const hotelRouter = require("./routes/Hotel");
 const kamarRouter = require("./routes/Kamar");
 const salesRouter = require("./routes/Sales");
 const bookingRouter = require("./routes/Booking");
 
-// Routes:
+// Mount routes at specific paths
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/hotel", hotelRouter);
 app.use("/api/v1/kamar", kamarRouter);

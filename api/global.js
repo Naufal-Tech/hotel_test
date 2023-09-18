@@ -5,6 +5,4 @@ module.exports = function (global) {
   global.moment = require("moment-timezone");
   global.response = require("./helpers/Response");
   global.middleware = require("./middleware/Auth");
-  global.appErr = require("./utils/appErr");
-  global.userHelper = require("./helpers/userHelper");
 };

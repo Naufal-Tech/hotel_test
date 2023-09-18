@@ -6,29 +6,30 @@ const BookingController = {
       const {
         user_id,
         kamar_id,
-        sales_code,
         tanggal_check_in,
         tanggal_check_out,
+        sales_code,
       } = req.body;
 
       // Rule 1: Cek apakah user exist
       const existingUser = await User.findOne({
-        where: { id: user_id },
-        deleted_by: null,
-        deleted_at: null,
+        where: { id: user_id, deleted_by: null, deleted_at: null },
       });
 
       if (!existingUser) {
         return res.status(400).json({ error: "User does not exist" });
       }
 
-      // Rule 2: Apakah Sales Code Exist
-      const salesRecord = await Sales.findOne({
-        where: { coupon: sales_code },
-      });
+      // Rule 2: Apakah Sales Code Exist (process only if sales_code is provided)
+      let salesRecord;
+      if (sales_code) {
+        salesRecord = await Sales.findOne({
+          where: { coupon: sales_code, deleted_at: null },
+        });
 
-      if (!salesRecord) {
-        return res.status(400).json({ error: "Invalid sales code" });
+        if (!salesRecord) {
+          return res.status(400).json({ error: "Invalid sales code" });
+        }
       }
 
       // Rule 3: Validasi Apakah kamar_id exist
@@ -47,12 +48,12 @@ const BookingController = {
       }
 
       // Kalkulasi harga_kamar based on the number of days
-      const daysBetween = (checkOutDate - checkInDate) / (1000 * 60 * 60 * 24);
+      const daysBetween = (checkOutDate - checkInDate) / (1000 * 60 * 60 * 24); // mili * seconds * hours * day
       const harga_kamar = roomRecord.harga * daysBetween;
 
       // Rule 4: Kalkulasi pendapatan_bersih and pendapatan_sales
-      const pendapatan_bersih = 0.8 * harga_kamar;
-      const pendapatan_sales = 0.2 * harga_kamar;
+      const pendapatan_bersih = 0.8 * harga_kamar; // 80%
+      const pendapatan_sales = 0.2 * harga_kamar; // 20%
 
       // Rule 5: Cek apakah saldo user cukup untuk melakukan booking
       if (existingUser.saldo < harga_kamar) {
@@ -62,25 +63,27 @@ const BookingController = {
       // Mengurangi the harga_kamar dari saldo user
       const updatedSaldo = existingUser.saldo - harga_kamar;
 
+      // If - else: Update user (Kalau sales_code tidak sama dengan sales_code exisitng user )
       // User tidak boleh menggunakan sales code yang sama dengan sebelumnya, lalu update saldo user dll
-      if (existingUser.sales_code !== sales_code) {
+      if (sales_code && existingUser.sales_code !== sales_code) {
+        // Check if the sales code is already used in a booking
+        const existingBooking = await Booking.findOne({
+          where: { sales_code: sales_code, deleted_at: null, deleted_by: null },
+        });
+
+        if (existingBooking) {
+          return res
+            .status(400)
+            .json({ error: "Sales code already used in a booking" });
+        }
+
+        // If the sales code is not already used, update the user
         await User.update(
           { saldo: updatedSaldo, sales_code: sales_code },
-          { where: { id: user_id } }
+          { where: { id: user_id, deleted_by: null, deleted_at: null } }
         );
-      } else {
+      } else if (sales_code) {
         return res.status(400).json({ error: "Sales code already in use" });
-      }
-
-      // Cek apakah the sales_code exist in Booking DB
-      const existingBooking = await Booking.findOne({
-        where: { sales_code: sales_code },
-      });
-
-      if (existingBooking) {
-        return res
-          .status(400)
-          .json({ error: "Sales code already used in a booking" });
       }
 
       // Create a new booking
@@ -97,12 +100,14 @@ const BookingController = {
       });
 
       // Update the Sales DB with commissions yang tersedia
-      salesRecord.total_commission += harga_kamar;
-      salesRecord.owner_commission += pendapatan_bersih;
-      salesRecord.sales_commission += pendapatan_sales;
-      await salesRecord.save();
+      if (salesRecord) {
+        salesRecord.total_commission += harga_kamar;
+        salesRecord.owner_commission += pendapatan_bersih;
+        salesRecord.sales_commission += pendapatan_sales;
+        await salesRecord.save();
+      }
 
-      res.status(201).json(newBooking);
+      response.ok(newBooking, res, "Booking created successfully");
     } catch (error) {
       console.error(error);
       res
@@ -118,6 +123,7 @@ const BookingController = {
       const booking = await Booking.findOne({
         where: {
           id,
+          deleted_by: null,
           deleted_at: null,
         },
       });
@@ -142,10 +148,9 @@ const BookingController = {
   get: async function (req, res) {
     try {
       const booking = await Booking.findAll({
-        where: { deleted_at: null },
+        where: { deleted_by: null, deleted_at: null },
       });
-
-      res.status(200).json(booking);
+      response.ok(booking, res, "View All Booking");
     } catch (error) {
       console.error(error);
       res
@@ -159,15 +164,14 @@ const BookingController = {
       const { id } = req.params;
 
       const booking = await Booking.findOne({
-        where: { id },
+        where: { id, deleted_by: null, deleted_at: null },
       });
 
       if (!booking) {
         return res.status(404).json({ error: "Booking not found" });
       }
 
-      // Return the user as a JSON response
-      res.status(200).json(booking);
+      response.ok(booking, res, "View Detail Booking");
     } catch (error) {
       console.error(error);
       res

@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
         primaryKey: true,
         type: DataTypes.STRING,
-        defaultValue: () => uuidv4(),
+        defaultValue: () => uuidv4(), // generate uuid by default
       },
       name: DataTypes.STRING,
       email: DataTypes.STRING,

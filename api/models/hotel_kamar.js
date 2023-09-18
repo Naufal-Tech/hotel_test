@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   class hotel_kamar extends Model {
     static associate(models) {
       // Define association here
-      hotel_kamar.hasMany(models.Booking, { foreignKey: "kamar_id" });
+      hotel_kamar.hasMany(models.Booking, { foreignKey: "kamar_id" }); // 1 hotel_kamar bisa memiliki banyak booking
     }
   }
 
