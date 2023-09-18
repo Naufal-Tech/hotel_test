@@ -1,4 +1,4 @@
-const { User } = require("../models");
+const { User, Sequelize } = require("../models");
 
 const UserController = {
   register: async function (req, res) {
@@ -137,12 +137,28 @@ const UserController = {
           .json({ error: "You do not have permission to update this user" });
       }
 
+      // Check if the provided no_hp is the same as any other user's no_hp (excluding the current user)
+      const duplicateUser = await User.findOne({
+        where: {
+          no_hp,
+          id: {
+            [Sequelize.Op.not]: id, // Exclude the current user's ID
+          },
+          deleted_by: null,
+          deleted_at: null,
+        },
+      });
+
+      if (duplicateUser) {
+        return res.status(400).json({ error: "Phone number already in use" });
+      }
+
       // Update the user information
       user.nama = nama;
       user.no_hp = no_hp;
       user.alamat = alamat;
+      user.saldo = parseFloat(user.saldo) + parseFloat(saldo);
       user.sales_code = sales_code;
-      user.saldo = saldo;
       user.updated_by = req.user.id;
 
       // Save the updated user data

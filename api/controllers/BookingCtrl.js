@@ -1,4 +1,4 @@
-const { Booking, User, hotel_kamar, Sales } = require("../models");
+const { Booking, User, hotel_kamar, sequelize } = require("../models");
 
 const BookingController = {
   add: async function (req, res) {
@@ -18,18 +18,6 @@ const BookingController = {
 
       if (!existingUser) {
         return res.status(400).json({ error: "User does not exist" });
-      }
-
-      // Rule 2: Apakah Sales Code Exist (process only if sales_code is provided)
-      let salesRecord;
-      if (sales_code) {
-        salesRecord = await User.findOne({
-          where: { sales_code: sales_code, deleted_at: null },
-        });
-
-        if (!salesRecord) {
-          return res.status(400).json({ error: "Invalid sales code" });
-        }
       }
 
       // Rule 3: Validasi Apakah kamar_id exist
@@ -63,44 +51,59 @@ const BookingController = {
       // Mengurangi the harga_kamar dari saldo user
       const updatedSaldo = existingUser.saldo - harga_kamar;
 
-      // If - else: Update user (Kalau sales_code tidak sama dengan sales_code exisitng user )
-      // User tidak boleh menggunakan sales code yang sama dengan sebelumnya, lalu update saldo user dll
-      if (sales_code && existingUser.sales_code !== sales_code) {
-        // Check if the sales code is already used in a booking
-        // const existingBooking = await Booking.findOne({
-        //   where: { sales_code: sales_code, deleted_at: null, deleted_by: null },
-        // });
-
-        // if (existingBooking) {
-        //   return res
-        //     .status(400)
-        //     .json({ error: "Sales code already used in a booking" });
-        // }
-
-        // If the sales code is not already used, update the user
+      if (sales_code) {
+        // Update the user's saldo
         await User.update(
           { saldo: updatedSaldo },
           { where: { id: user_id, deleted_by: null, deleted_at: null } }
         );
 
+        // Increase owner_commission for users with "owner" status
         await User.update(
-          { owner_commission: pendapatan_bersih },
-          { where: { status: "owner" } }
+          {
+            owner_commission: sequelize.literal(
+              `owner_commission + ${pendapatan_bersih}`
+            ),
+          },
+          { where: { status: "owner", deleted_by: null, deleted_at: null } }
         );
 
+        // Update or increase user_commission and saldo which has sales_code
         await User.update(
-          { user_commission: pendapatan_sales, saldo: pendapatan_sales },
-          { where: { sales_code: sales_code, status: "user" } }
+          {
+            user_commission: sequelize.literal(
+              `user_commission + ${pendapatan_sales}`
+            ),
+            saldo: sequelize.literal(`saldo + ${pendapatan_sales}`),
+          },
+          {
+            where: {
+              sales_code: sales_code,
+              deleted_by: null,
+              deleted_at: null,
+            },
+          }
         );
-      } else if (sales_code) {
-        return res.status(400).json({ error: "Sales code already in use" });
+      } else {
+        await User.update(
+          { saldo: updatedSaldo },
+          { where: { id: user_id, deleted_by: null, deleted_at: null } }
+        );
+        await User.update(
+          {
+            owner_commission: sequelize.literal(
+              `owner_commission + ${harga_kamar}`
+            ),
+          },
+          {
+            where: {
+              status: "owner",
+              deleted_by: null,
+              deleted_at: null,
+            },
+          }
+        );
       }
-
-      // Update the Sales DB with commissions yang tersedia
-      // if (salesRecord) {
-      //   salesRecord.sales_commission += pendapatan_sales;
-      //   await salesRecord.save();
-      // }
 
       // Create a new booking
       const newBooking = await Booking.create({

@@ -1,4 +1,10 @@
-# Project Setup Database: hotel_wedeall
+# Project Setup Database:
+
+- npm run db:create
+- npm run db:migrate
+- npm run seed:user
+- npm run seed:hotel
+- npm run db:kamar (Dont forget to adjust hotel id)
 
 ## Using Sequelize Commands
 
