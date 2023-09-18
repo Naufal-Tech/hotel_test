@@ -1,4 +1,4 @@
-# Project Setup
+# Project Setup Database: hotel_wedeall
 
 ## Using Sequelize Commands
 

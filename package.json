@@ -11,7 +11,7 @@
     "seed-user": "cd api && sequelize db:seed --seed ./seeders/user.js",
     "seed-hotel": "cd api && sequelize db:seed --seed ./seeders/hotel.js",
     "seed-sales": "cd api && sequelize db:seed --seed ./seeders/sales.js",
-    "seed-kamar": "cd api && sequelize db:seed --seed ./seeders/kamar_hotel.js"
+    "seed-kamar": "cd api && sequelize db:seed --seed ./seeders/hotel_kamar.js"
   },
   "keywords": [],
   "author": "",
