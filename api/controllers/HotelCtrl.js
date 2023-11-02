@@ -11,6 +11,7 @@ const HotelController = {
         no_hp,
         room_list,
         created_at: new Date(),
+        created_by: req.user.id,
       });
 
       response.ok(newHotel, res, "Hotel added successfully");

@@ -1,9 +1,17 @@
-const { User, Sequelize } = require("../models");
+const {
+  User,
+  Follow,
+  Biodata,
+  UserHotel,
+  Hotel,
+  Sequelize,
+} = require("../models");
+const { Op } = require("sequelize");
 
 const UserController = {
   register: async function (req, res) {
     try {
-      const { nama, no_hp, alamat } = req.body;
+      const { nama, no_hp, alamat, email } = req.body;
 
       // Cek if the phone number (no_hp) already exists in the database
       const existingUser = await User.findOne({
@@ -24,6 +32,7 @@ const UserController = {
         nama,
         no_hp,
         alamat,
+        email,
         created_at: new Date(),
       });
 
@@ -106,6 +115,40 @@ const UserController = {
     }
   },
 
+  restore: async function (req, res) {
+    try {
+      const { id } = req.body;
+
+      const user = await User.findOne({
+        where: {
+          id,
+          deleted_by: { [Op.ne]: null }, // Check if the user is soft-deleted
+        },
+      });
+
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+
+      if (user.deleted_by === null) {
+        return res.status(400).json({ error: "User is not soft-deleted" });
+      }
+
+      // Reset deleted_at and deleted_by to null to indicate user is restored
+      await user.update({
+        deleted_at: null,
+        deleted_by: null,
+      });
+
+      res.status(200).json({ message: "User restored successfully" });
+    } catch (error) {
+      console.error(error);
+      res
+        .status(500)
+        .json({ error: "An error occurred while restoring the user" });
+    }
+  },
+
   update: async function (req, res) {
     try {
       const { id, nama, no_hp, alamat, sales_code, saldo } = req.body;
@@ -177,7 +220,21 @@ const UserController = {
     try {
       const users = await User.findAll({
         where: { deleted_at: null, deleted_by: null },
-        // attributes: { exclude: ["no_hp"] }, // Exclude the password field from the result
+        attributes: {
+          exclude: [
+            "created_at",
+            "created_by",
+            "deleted_at",
+            "updated_by",
+            "deleted_by",
+          ],
+        },
+        include: [
+          {
+            model: Biodata,
+            as: "biodata",
+          },
+        ],
       });
 
       res.status(200).json(users);
@@ -217,20 +274,53 @@ const UserController = {
 
   viewProfile: async (req, res, next) => {
     try {
-      const userId = req.user.id; // Cek user dari token
+      const userId = req.user.id; // Get the user's ID from the token
 
       const user = await User.findOne({
         where: {
           id: userId,
-          deleted_by: null, // ambil yang null, karena belum didelete
+          deleted_by: null,
           deleted_at: null,
         },
-        // attributes: { exclude: ["no_hp"] },
       });
 
       if (!user) {
         return res.status(404).json({ error: "User not found" });
       }
+
+      // Now, let's fetch the associated Biodata that matches the created_by field
+      const biodata = await Biodata.findOne({
+        where: {
+          created_by: userId, // Match the created_by field with the user's ID
+        },
+      });
+
+      // You can attach the biodata to the user if found
+      if (biodata) {
+        user.dataValues.biodata = biodata;
+      }
+
+      // Fetch the user's friends using the 'Follow' model
+      const friends = await Follow.findAll({
+        where: {
+          user_id: userId,
+        },
+      });
+
+      // Extract friend IDs from the 'friends_id' property
+      const friendIds = friends.map((friend) => friend.friends_id);
+
+      // Fetch the actual user objects based on friend IDs
+      const userFriends = await User.findAll({
+        where: {
+          id: friendIds,
+          deleted_by: null,
+          deleted_at: null,
+        },
+      });
+
+          // Attach the list of friends to the user object
+    user.dataValues.friends = userFriends;
 
       res.status(200).json(user);
     } catch (error) {

@@ -18,7 +18,7 @@ Command: sequelize
 2. npm i --save pg pg-hstore
 3. npm i --save sequelize-cli
 4. npx sequelize-cli init
-5. sequelize model:generate --name sales --attributes name:String,email:String,sales_commission:Numeric,owner_commission:Numeric
+5. Generate Model: [CD api] sequelize model:generate --name sales --attributes name:String,email:String,sales_commission:Numeric,owner_commission:Numeric
 6. sequelize db:migrate --name your-migration-file-name.js
 7. npx sequelize-cli db:create / sequelize db:create
 8. npx sequelize-cli db:migrate / sequelize db:migrate

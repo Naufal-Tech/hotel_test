@@ -1,35 +1,32 @@
 "use strict";
 /** @type {import('sequelize-cli').Migration} */
 const { v4: uuidv4 } = require("uuid");
-
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("hotel", {
+    await queryInterface.createTable("biodata", {
       id: {
         allowNull: false,
-        unique: true,
         primaryKey: true,
         type: Sequelize.STRING,
+        unique: true,
         defaultValue: uuidv4(),
       },
-      nama: {
+      birthdate: {
+        type: Sequelize.DATE,
+      },
+      self_description: {
         type: Sequelize.STRING,
       },
-      alamat: {
-        type: Sequelize.STRING,
-      },
-      no_hp: {
+      hobbies: {
         type: Sequelize.STRING,
       },
 
       // CONFIG:
       created_by: {
-        allowNull: false,
         type: Sequelize.STRING,
         references: {
           model: "user", // Specify the model name (table name) here
           key: "id",
-          deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE, // Add this line to resolve deferred FK constraints
         },
       },
       created_at: {
@@ -54,6 +51,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("hotel");
+    await queryInterface.dropTable("biodata");
   },
 };

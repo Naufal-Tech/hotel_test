@@ -1,18 +1,26 @@
+"use strict";
 const { Model } = require("sequelize");
 const { v4: uuidv4 } = require("uuid");
-
 module.exports = (sequelize, DataTypes) => {
-  class Hotel extends Model {
+  class UserHotel extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
     static associate(models) {
-      Hotel.hasMany(models.hotel_kamar, { foreignKey: "hotel_id" });
-      Hotel.belongsToMany(models.User, {
-        through: models.UserHotel,
+      UserHotel.belongsTo(models.User, {
+        foreignKey: "user_id",
+        as: "user", // Define an alias for the User association
+      });
+
+      UserHotel.belongsTo(models.Hotel, {
         foreignKey: "hotel_id",
+        as: "hotel", // Define an alias for the Hotel association
       });
     }
   }
-
-  Hotel.init(
+  UserHotel.init(
     {
       id: {
         allowNull: false,
@@ -21,9 +29,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         defaultValue: () => uuidv4(),
       },
-      nama: DataTypes.STRING,
-      alamat: DataTypes.STRING,
-      no_hp: DataTypes.STRING,
+      user_id: DataTypes.STRING,
+      hotel_id: DataTypes.STRING,
+
       // CONFIG
       created_by: {
         allowNull: false,
@@ -51,21 +59,18 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "Hotel",
-      freezeTableName: true,
-      tableName: "hotel",
+      modelName: "UserHotel",
+      freezeTableName: true, // matching the name of table without s
+      tableName: "user_hotel", // Set the table name to match your migration
       timestamps: false,
-      deletedAt: "deleted_at",
-      deletedBy: "deleted_by",
-      restoredAt: "restored_at",
       paranoid: true,
       underscored: true,
     }
   );
 
-  Hotel.sync({ alter: true }).then(() => {
-    console.log("Table Hotel synchronized with schema");
+  UserHotel.sync({ alter: true }).then(() => {
+    console.log("Table User Hotel synchronized with schema");
   });
 
-  return Hotel;
+  return UserHotel;
 };

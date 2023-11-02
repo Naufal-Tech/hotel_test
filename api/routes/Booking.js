@@ -2,6 +2,7 @@ const express = require("express");
 const Controller = require("../controllers/BookingCtrl");
 const bookingRouter = express.Router();
 
+
 //POST: /api/v1/booking
 bookingRouter.post("/", Controller.add);
 

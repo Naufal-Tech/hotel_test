@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         references: {
-          model: "Hotel",
+          model: "hotel",
           key: "id",
         },
       },
@@ -49,6 +49,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "hotel_kamar",
       tableName: "hotel_kamar",
       timestamps: false,
+      underscored: true,
     }
   );
 

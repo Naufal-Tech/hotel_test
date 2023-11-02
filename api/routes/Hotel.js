@@ -1,9 +1,10 @@
 const express = require("express");
 const Controller = require("../controllers/HotelCtrl");
 const hotelRouter = express.Router();
+const middleware = require("../middleware/Auth");
 
 //POST: /api/v1/hotel
-hotelRouter.post("/", Controller.add);
+hotelRouter.post("/", middleware.protect, Controller.add);
 
 //PATCH: /api/v1/hotel/update
 hotelRouter.patch("/update", Controller.update);

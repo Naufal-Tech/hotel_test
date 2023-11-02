@@ -15,11 +15,14 @@ userRouter.patch("/update", middleware.protect, Controller.update);
 //DELETE: /api/v1/users/delete
 userRouter.delete("/delete", middleware.protect, Controller.delete);
 
+//Restore: /api/v1/users/restore
+userRouter.patch("/restore", Controller.restore);
+
 //GET: /api/v1/users/delete
 userRouter.get("/detail/:id", middleware.protect, Controller.detail);
 
 //GET: /api/v1/users/
-userRouter.get("/", middleware.protect, Controller.get);
+userRouter.get("/", Controller.get);
 
 //GET: /api/v1/users/view-profile
 userRouter.get("/view-profile", middleware.protect, Controller.viewProfile);

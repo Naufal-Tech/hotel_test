@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const { sequelize } = require("./models");
 const dotenv = require("dotenv");
+const routes = require("./routes/index");
 dotenv.config();
 
 /*** Global Variable ***/
@@ -33,19 +34,8 @@ app.use(function (req, res, next) {
   next();
 });
 
-// Routes: Import and use various route modules
-const userRouter = require("./routes/User");
-const hotelRouter = require("./routes/Hotel");
-const kamarRouter = require("./routes/Kamar");
-const salesRouter = require("./routes/Sales");
-const bookingRouter = require("./routes/Booking");
-
-// Mount routes at specific paths
-app.use("/api/v1/users", userRouter);
-app.use("/api/v1/hotel", hotelRouter);
-app.use("/api/v1/kamar", kamarRouter);
-app.use("/api/v1/sales", salesRouter);
-app.use("/api/v1/booking", bookingRouter);
+// All Routes Here:
+app.use("/", routes);
 
 // Define a simple route handler to indicate that the server is running
 app.use("/test", (req, res) => {

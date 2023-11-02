@@ -18,6 +18,10 @@ module.exports = {
       no_hp: {
         type: Sequelize.STRING,
       },
+      email: {
+        type: Sequelize.STRING,
+        unique: true,
+      },
       alamat: {
         type: Sequelize.STRING,
       },

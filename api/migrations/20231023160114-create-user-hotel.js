@@ -4,22 +4,29 @@ const { v4: uuidv4 } = require("uuid");
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("hotel", {
+    await queryInterface.createTable("user_hotel", {
       id: {
         allowNull: false,
-        unique: true,
         primaryKey: true,
         type: Sequelize.STRING,
+        unique: true,
         defaultValue: uuidv4(),
       },
-      nama: {
+      user_id: {
         type: Sequelize.STRING,
+        references: {
+          model: "user", // Reference the User model
+          key: "id",
+          deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE,
+        },
       },
-      alamat: {
+      hotel_id: {
         type: Sequelize.STRING,
-      },
-      no_hp: {
-        type: Sequelize.STRING,
+        references: {
+          model: "hotel", // Reference the Hotel model
+          key: "id",
+          deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE,
+        },
       },
 
       // CONFIG:
@@ -54,6 +61,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("hotel");
+    await queryInterface.dropTable("user_hotel");
   },
 };

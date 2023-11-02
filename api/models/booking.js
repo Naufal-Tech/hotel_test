@@ -62,6 +62,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "Booking",
       tableName: "booking", // Set the table name to match your migration
       timestamps: false, // Disable timestamps as they are handled in the columns
+      underscored: true,
     }
   );
 
